@@ -1,24 +1,36 @@
 import json
+from dataclasses import dataclass
 
 
-class Monster():
+@dataclass
+class Monster:
+    """Monster data Class"""
     name: str
     type: str
     alignment: str
 
-    def __init__(self, dict):
-
-        self.name = dict["name"]
-        self.type = dict["type"]
-        self.alignment = dict["alignment"]
-
     def __str__(self) -> str:
         return self.name+" type: "+self.type+" alignment: "+self.alignment
+
+# class Monster():
+#     name: str
+#     type: str
+#     alignment: str
+
+#     def __init__(self, dict):
+
+#         self.name = dict["name"]
+#         self.type = dict["type"]
+#         self.alignment = dict["alignment"]
+
+#     def __str__(self) -> str:
+#         return self.name+" type: "+self.type+" alignment: "+self.alignment
 
 
 def decode(dict):
     if "name" in dict and "type" in dict:
-        return Monster(dict)
+        # return Monster(dict)
+        return Monster(dict["name"], dict["type"], dict["alignment"])
 
 
 monsterFile = 'data/monsters.json'
