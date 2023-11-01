@@ -5,6 +5,7 @@ from dataclasses import dataclass
 @dataclass
 class Monster:
     """Monster data Class"""
+    index: str
     name: str
     type: str
     alignment: str
@@ -30,7 +31,7 @@ class Monster:
 def decode(dict):
     if "name" in dict and "type" in dict:
         # return Monster(dict)
-        return Monster(dict["name"], dict["type"], dict["alignment"])
+        return Monster(dict["index"], dict["name"], dict["type"], dict["alignment"])
 
 
 monsterFile = 'data/monsters.json'
