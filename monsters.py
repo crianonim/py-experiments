@@ -28,10 +28,10 @@ class Monster:
 #         return self.name+" type: "+self.type+" alignment: "+self.alignment
 
 
-def decode(dict):
-    if "name" in dict and "type" in dict:
+def decode(d):
+    if "name" in d and "type" in d:
         # return Monster(dict)
-        return Monster(dict["index"], dict["name"], dict["type"], dict["alignment"])
+        return Monster(d["index"], d["name"], d["type"], d["alignment"])
 
 
 monsterFile = 'data/monsters.json'

@@ -2,3 +2,4 @@ requests
 pygame
 flask
 lark
+functions-framework==3.*
