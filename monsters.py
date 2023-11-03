@@ -1,4 +1,5 @@
 import json
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 
@@ -29,22 +30,20 @@ class Monster:
 
 
 def decode(d):
-    if "name" in d and "type" in d:
-        # return Monster(dict)
+
         return Monster(d["index"], d["name"], d["type"], d["alignment"])
 
 
 monsterFile = 'data/monsters.json'
 
 
-def getMonsters() -> list[Monster]:
-
+def getMonsters() -> Sequence[Monster]:
     with open(monsterFile, 'r') as f:
-        return json.load(f, object_hook=decode)
+        return (list(map(decode,json.load(f))))
 
 
 def getNames(monsters: list[Monster]) -> list[str]:
-    return list(map(lambda m: m.value, monsters))
+    return list(map(lambda m: m.name, monsters))
 
 
 monsters = getMonsters()
