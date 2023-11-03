@@ -44,7 +44,7 @@ def getMonsters() -> list[Monster]:
 
 
 def getNames(monsters: list[Monster]) -> list[str]:
-    return list(map(lambda m: m.name, monsters))
+    return list(map(lambda m: m.value, monsters))
 
 
 monsters = getMonsters()

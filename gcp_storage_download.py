@@ -22,7 +22,7 @@ def authenticate_implicit_with_adc(project_id="your-google-cloud-project-id"):
     # Hence, the client library will look for credentials using ADC.
     storage_client = storage.Client(project=project_id)
     buckets = storage_client.list_buckets()
-    response= ", ".join(list(map(lambda b: b.name, buckets)))
+    response= ", ".join(list(map(lambda b: b.value, buckets)))
     return response
 
 

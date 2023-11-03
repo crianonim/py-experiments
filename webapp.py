@@ -21,4 +21,4 @@ def monster_route(index):
 
 @app.route("/monsters")
 def monsters_route():
-    return "<ul>"+("".join(map(lambda m: f'<li><a href="monsters/{m.index}">{m.name}</li>', monsters.monsters)))+"</ul>"
+    return "<ul>"+("".join(map(lambda m: f'<li><a href="monsters/{m.index}">{m.value}</li>', monsters.monsters)))+ "</ul>"
