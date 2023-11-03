@@ -5,6 +5,7 @@ Screept
 Implements Screept "programming language" in python >3.12
 """
 from collections.abc import Mapping
+from typing import Sequence
 
 from lark import Lark, Transformer, v_args
 from dataclasses import dataclass
@@ -40,6 +41,12 @@ class ValueNumber(LiteralValue):
 @dataclass
 class ValueString(LiteralValue):
     value: str
+
+
+@dataclass
+class FuncCall(Expression):
+    identifier: str
+    values: Sequence[Value]
 
 
 @dataclass
@@ -88,6 +95,7 @@ calc_grammar = """
 
     ?atom: NUMBER           -> number
          | "-" atom         -> neg
+         | NAME "(" [conditional ("," conditional)*] ")" -> func_call
          | NAME             -> var
          | "(" conditional ")"
          | STRING           -> string
@@ -103,35 +111,49 @@ calc_grammar = """
 @v_args(inline=True)  # Affects the signatures of the methods
 class Ast(Transformer):
 
-    def string(self, s):
+    @staticmethod
+    def string(s):
         # Remove quotation marks
         return ValueString(s[1:-1])
 
-    def var(self, name):
+    @staticmethod
+    def var(name):
         return ExpressionVar(name)
 
-    def add(self, a, b):
+    @staticmethod
+    def func_call(identifier, *values):
+        return FuncCall(identifier, values)
+
+    @staticmethod
+    def add(a, b):
         return BinaryOp(a, "+", b)
 
-    def sub(self, a, b):
+    @staticmethod
+    def sub(a, b):
         return BinaryOp(a, "-", b)
 
-    def mul(self, a, b):
+    @staticmethod
+    def mul(a, b):
         return BinaryOp(a, "*", b)
 
-    def div(self, a, b):
+    @staticmethod
+    def div(a, b):
         return BinaryOp(a, "/", b)
 
-    def number(self, n):
+    @staticmethod
+    def number(n):
         return ValueNumber(float(n))
 
-    def neg(self, n):
+    @staticmethod
+    def neg(n):
         return UnaryOP(n, "-")
 
-    def conditional(self, cond, ifTrue, ifFalse):
-        return Conditional(cond, ifTrue, ifFalse)
+    @staticmethod
+    def conditional(*args):
+        return Conditional(*args)
 
-    def comp_equal(self, left, right):
+    @staticmethod
+    def comp_equal(left, right):
         return ComparisonEqual(left, right)
 
 
@@ -186,7 +208,9 @@ def evaluate_expression(e: Expression, env: Environment):
 def test():
     env: Environment = Environment({'abc': ValueNumber(66)})
     # print(calc2("a = 1+2"))
-    expr = "5-1+a*(-3-3)==3?1?3:2:4"
+    # expr = "5-1+a*(-3-3)==3?1?3:2:4"
+    expr = "a(12,33)"
+
     expr2 = 'abc+4'
     parsed3 = calc2(expr2)
     print("S", parsed3)
