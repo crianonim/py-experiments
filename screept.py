@@ -5,12 +5,12 @@ Screept
 Implements Screept "programming language" in python >3.12
 """
 import random
-from collections.abc import Mapping,MutableMapping
+from collections.abc import MutableMapping, Callable
 from copy import deepcopy
 from math import floor
 from pprint import pprint
-from typing import Sequence
-
+from typing import Sequence, override
+from abc import ABC, abstractmethod
 from lark import Lark, Transformer, v_args, Token
 from dataclasses import dataclass
 
@@ -19,12 +19,18 @@ class Expression:
     pass
 
 
-class Value(Expression):
+class ExprLiteralValue(Expression):
     pass
 
 
-class LiteralValue(Value):
-    pass
+class Value(ExprLiteralValue, ABC):
+    @abstractmethod
+    def get_string(self) -> str:
+        pass
+
+    @abstractmethod
+    def get_number(self) -> float:
+        pass
 
 
 class Identifier:
@@ -47,48 +53,72 @@ class ExpressionVar(Expression):
 
 
 @dataclass
-class ValueNumber(LiteralValue):
+class ValueNumber(Value):
     value: float
 
+    @override
+    def get_string(self) -> str:
+        return str(self.value)
+
+    @override
+    def get_number(self) -> float:
+        return self.value
+
 
 @dataclass
-class ValueString(LiteralValue):
+class ValueString(Value):
     value: str
 
+    @override
+    def get_string(self) -> str:
+        return self.value
+
+    @override
+    def get_number(self) -> float:
+        return 1
+
 
 @dataclass
-class ValueFunction(LiteralValue):
+class ValueFunction(Value):
     value: Expression
 
+    @override
+    def get_string(self) -> str:
+        return "<FUNC>"
+
+    @override
+    def get_number(self) -> float:
+        return 1
+
 
 @dataclass
-class FuncCall(Expression):
+class ExprFuncCall(Expression):
     identifier: str
-    args: Sequence[Value]
+    args: Sequence[ExprLiteralValue]
 
 
 @dataclass
-class BinaryOp(Expression):
+class ExprBinaryOp(Expression):
     left: Expression
     op: str
     right: Expression
 
 
 @dataclass
-class UnaryOP(Expression):
-    left: Value
+class ExprUnaryOP(Expression):
+    left: ExprLiteralValue
     op: str
 
 
 @dataclass
-class Conditional(Expression):
+class ExprConditional(Expression):
     cond: Expression
     if_true: Expression
     if_false: Expression
 
 
 @dataclass
-class ComparisonEqual(Expression):
+class ExprComparisonEqual(Expression):
     left: Expression
     right: Expression
 
@@ -100,6 +130,7 @@ grammar = """
         | "PROC" identifier statement                   -> stmt_proc_def
         | "RUN" identifier  "(" [expression ("," expression)*] ")"    -> stmt_proc_run
         | "RND" identifier expression expression        -> stmt_rnd
+        | "IF" expression "THEN" statement "ELSE" statement -> stmt_if
     
     # expressions
     
@@ -145,7 +176,7 @@ class Statement:
 
 @dataclass
 class Environment:
-    vars: MutableMapping[str, LiteralValue]
+    vars: MutableMapping[str, Value]
     procedures: MutableMapping[str, Statement]
     output: list[str]
 
@@ -185,6 +216,13 @@ class StmtRnd(Statement):
     maxVal: Expression
 
 
+@dataclass
+class StmtIf(Statement):
+    condition: Identifier
+    if_true: Statement
+    if_false: Statement
+
+
 @v_args(inline=True)  # Affects the signatures of the methods
 class Ast(Transformer):
     @staticmethod
@@ -206,15 +244,15 @@ class Ast(Transformer):
 
     @staticmethod
     def func_call(identifier, *values):
-        return FuncCall(identifier, values)
+        return ExprFuncCall(identifier, values)
 
     @staticmethod
     def add(a, b):
-        return BinaryOp(a, "+", b)
+        return ExprBinaryOp(a, "+", b)
 
     @staticmethod
     def sub(a, b):
-        return BinaryOp(a, "-", b)
+        return ExprBinaryOp(a, "-", b)
 
     @staticmethod
     def NAME(a: Token) -> Identifier:
@@ -226,23 +264,23 @@ class Ast(Transformer):
 
     @staticmethod
     def mul(a, b):
-        return BinaryOp(a, "*", b)
+        return ExprBinaryOp(a, "*", b)
 
     @staticmethod
     def div(a, b):
-        return BinaryOp(a, "/", b)
+        return ExprBinaryOp(a, "/", b)
 
     @staticmethod
     def neg(n):
-        return UnaryOP(n, "-")
+        return ExprUnaryOP(n, "-")
 
     @staticmethod
     def conditional(*args):
-        return Conditional(*args)
+        return ExprConditional(*args)
 
     @staticmethod
     def comp_equal(left, right):
-        return ComparisonEqual(left, right)
+        return ExprComparisonEqual(left, right)
 
     @staticmethod
     def stmt_print(e):
@@ -270,6 +308,10 @@ class Ast(Transformer):
     def stmt_rnd(i, minVal, maxVal):
         return StmtRnd(i, minVal, maxVal)
 
+    @staticmethod
+    def stmt_if(cond, if_true, if_false):
+        return StmtIf(cond, if_true, if_false)
+
 
 stmt_parser = Lark(grammar, parser='lalr', start='statement', transformer=Ast())
 expr_parser = Lark(grammar, parser='lalr', start='expression', transformer=Ast())
@@ -277,16 +319,8 @@ expr_parser = Lark(grammar, parser='lalr', start='expression', transformer=Ast()
 
 #
 
-def main():
-    while True:
-        try:
-            s = input('> ')
-        except EOFError:
-            break
-        print(expr_parser.parse(s))
 
-
-def get_literal_value(v: LiteralValue) -> str | float:
+def get_literal_value(v: Value) -> str | float:
     match v:
         case ValueNumber(x):
             return x
@@ -302,22 +336,15 @@ def get_identifier_value(i: Identifier, env: Environment) -> str:
             return str(evaluate_expression(x, env))
 
 
-def get_string_value(v: LiteralValue) -> str:
-    match v:
-        case ValueNumber(n):
-            return str(n)
-        case ValueString(t):
-            return t
-        case ValueFunction(f):
-            # TODO
-            return "FUNC"
-
-def get_numerical_value(v: LiteralValue)-> float:
+def get_numerical_value(v: Value) -> float:
     match v:
         case ValueNumber(n):
             return n
-        case _ : return 0
-def evaluate_expression(e: Expression, env: Environment) -> LiteralValue:
+        case _:
+            return 0
+
+
+def evaluate_expression(e: Expression, env: Environment) -> Value:
     match e:
         case ValueNumber(v):
             return ValueNumber(v)
@@ -325,7 +352,7 @@ def evaluate_expression(e: Expression, env: Environment) -> LiteralValue:
             return ValueString(v)
         case ValueFunction(v):
             return ValueFunction(v)
-        case BinaryOp(left, op, right):
+        case ExprBinaryOp(left, op, right):
             from operator import sub, mul, truediv
             match op:
                 case "+":
@@ -335,7 +362,7 @@ def evaluate_expression(e: Expression, env: Environment) -> LiteralValue:
                         case (ValueNumber(ll), ValueNumber(rr)):
                             return ValueNumber(ll + rr)
                         case _:
-                            return ValueString(get_string_value(l) + get_string_value(r))
+                            return ValueString(l.get_string() + r.get_string())
 
                 case "-":
                     binary = sub
@@ -350,10 +377,10 @@ def evaluate_expression(e: Expression, env: Environment) -> LiteralValue:
         case ExpressionVar(i):
 
             return env.vars[get_identifier_value(i, env)]
-        case UnaryOP(left, op):
+        case ExprUnaryOP(left, op):
             match op:
-                case "-": return ValueNumber(-evaluate_expression(left).value)
-        case FuncCall(i, args):
+                case "-": return ValueNumber(-evaluate_expression(left, env).get_number())
+        case ExprFuncCall(i, args):
             func = env.vars[get_identifier_value(i, env)]
             if isinstance(func, ValueFunction):
                 new_env = environment_with_args(env, args)
@@ -361,12 +388,12 @@ def evaluate_expression(e: Expression, env: Environment) -> LiteralValue:
                 return evaluate_expression(func.value, new_env)
 
             raise Exception
-        case ComparisonEqual(left, right):
+        case ExprComparisonEqual(left, right):
             if evaluate_expression(left, env) == evaluate_expression(right, env):
                 return ValueNumber(1)
             else:
                 return ValueNumber(0)
-        case Conditional(cond, if_true, if_false):
+        case ExprConditional(cond, if_true, if_false):
             ec = evaluate_expression(cond, env)
             if ec == ValueNumber(0):
                 return evaluate_expression(if_false, env)
@@ -376,18 +403,18 @@ def evaluate_expression(e: Expression, env: Environment) -> LiteralValue:
             print("DIDN'T handle", e)
 
 
-def environment_with_args(env: Environment, args: Sequence[Value]) -> Environment:
+def environment_with_args(env: Environment, args: Sequence[ExprLiteralValue]) -> Environment:
     new_env = deepcopy(env)
     for i, arg in enumerate(args):
         new_env.vars['_' + str(i)] = evaluate_expression(arg, env)
     return new_env
 
 
-def run_statement(s: Statement, env: Environment) -> None:
+def run_statement(s: Statement, env: Environment, emit_handler: Callable[[str], None] = lambda x: None) -> None:
     match s:
         case StmtPrint(e):
             res = evaluate_expression(e, env)
-            env.output.append(get_string_value(res))
+            env.output.append(res.get_string())
             print("PRINT ", evaluate_expression(e, env))
         case StmtBind(i, e):
             v = evaluate_expression(e, env)
@@ -404,21 +431,25 @@ def run_statement(s: Statement, env: Environment) -> None:
                 env.vars['_' + str(i)] = evaluate_expression(arg, env)
 
             run_statement(stmt, env)
-        case StmtRnd(i,minVal,maxVal):
-            min_v=get_numerical_value(evaluate_expression(minVal,env))
-            max_v=get_numerical_value(evaluate_expression(maxVal,env))
+        case StmtRnd(i, minVal, maxVal):
+            min_v = get_numerical_value(evaluate_expression(minVal, env))
+            max_v = get_numerical_value(evaluate_expression(maxVal, env))
 
-            env.vars[get_identifier_value(i, env)] = ValueNumber(random.randint(floor(min_v),floor(max_v)))
+            env.vars[get_identifier_value(i, env)] = ValueNumber(random.randint(floor(min_v), floor(max_v)))
+        case StmtIf(cond, if_true, if_false):
+            if evaluate_expression(cond, env).get_number():
+                run_statement(if_true, env)
+            else:
+                run_statement(if_false, env)
         case _:
-            raise Exception("unknown statement")
-
+            raise Exception("unknown statement", s)
 
 
 def test():
     env: Environment = Environment({'abc': ValueNumber(66)
-                                    , 'fun1': ValueFunction(
-            BinaryOp(ExpressionVar(IdentifierLiteral('_0')), '+',
-                           ExpressionVar(IdentifierLiteral('_1'))))
+                                       , 'fun1': ValueFunction(
+            ExprBinaryOp(ExpressionVar(IdentifierLiteral('_0')), '+',
+                         ExpressionVar(IdentifierLiteral('_1'))))
                                     },
                                    {},
                                    [])
@@ -441,11 +472,13 @@ def test():
     s1 = """{ g=FUNC _0 + _1;
     PROC janowa { PRINT _0 ; a66=5 };
     RUN janowa("X");
-     PRINT g(5,a66); PRINT g(5,6)==10 ? "Jan" : "Test" ;
+     PRINT g(5,a66); PRINT g(5,-6)==10 ? "Jan" : "Test" ;
      a66=a66+2;
      PRINT a66;
      RND xx 2 10;
-     PRINT xx
+     PRINT xx;
+     PRINT g;
+     IF xx==5 THEN PRINT "XX"+xx ELSE PRINT "YYY"+xx
      }"""
     sp1 = stmt_parser.parse(s1)
     print(sp1)
@@ -453,6 +486,15 @@ def test():
     pprint(env)
     # print(parsed2.pretty())
     # s1 = stmt_parser.parse()
+
+
+def main():
+    while True:
+        try:
+            s = input('> ')
+        except EOFError:
+            break
+        print(expr_parser.parse(s))
 
 
 if __name__ == '__main__':
