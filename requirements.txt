@@ -4,3 +4,4 @@ flask
 lark
 functions-framework==3.*
 google-cloud-storage
+pydot

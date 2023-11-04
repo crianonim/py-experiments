@@ -11,7 +11,7 @@ from math import floor
 from pprint import pprint
 from typing import Sequence, override
 from abc import ABC, abstractmethod
-from lark import Lark, Transformer, v_args, Token
+from lark import Lark, Transformer, v_args, Token, tree
 from dataclasses import dataclass
 
 
@@ -151,6 +151,7 @@ grammar = """
     ?product: atom
         | product "*" atom  -> mul
         | product "/" atom  -> div
+        |
 
     ?atom: NUMBER           -> number
          | "-" atom         -> neg
@@ -325,6 +326,8 @@ class Ast(Transformer):
 
 stmt_parser = Lark(grammar, parser='lalr', start='statement', transformer=Ast())
 expr_parser = Lark(grammar, parser='lalr', start='expression', transformer=Ast())
+stmt_parser_tree = Lark(grammar, parser='lalr', start='statement')
+expr_parser_tree = Lark(grammar, parser='lalr', start='expression')
 
 
 #
@@ -478,11 +481,9 @@ def test():
     expr2 = """fun1(2,3)==6?1:0"""
     # parsed3 = calc2(expr2)
     parsed3 = expr_parser.parse(expr2)
-
     print("S", parsed3)
     print("EV", evaluate_expression(parsed3, env))
     parsed = expr_parser.parse(expr)
-    # parsed2 = Lark('  ?start: conditional\n'+expression_grammar, parser='lalr').parse(expr)
     print(parsed)
     s1 = """{ g=FUNC _0 + _1;
     PROC janowa { PRINT _0 ; a66=5 };
