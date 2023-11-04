@@ -4,8 +4,11 @@ Screept
 
 Implements Screept "programming language" in python >3.12
 """
-from collections.abc import Mapping
+import random
+from collections.abc import Mapping,MutableMapping
 from copy import deepcopy
+from math import floor
+from pprint import pprint
 from typing import Sequence
 
 from lark import Lark, Transformer, v_args, Token
@@ -39,11 +42,6 @@ class IdentifierComputed(Identifier):
 
 
 @dataclass
-class Environment:
-    vars: Mapping[str, LiteralValue]
-
-
-@dataclass
 class ExpressionVar(Expression):
     identifier: Identifier
 
@@ -59,7 +57,7 @@ class ValueString(LiteralValue):
 
 
 @dataclass
-class ValueFunction(Expression):
+class ValueFunction(LiteralValue):
     value: Expression
 
 
@@ -95,9 +93,18 @@ class ComparisonEqual(Expression):
     right: Expression
 
 
-calc_grammar = """
-    ?start: conditional
-
+grammar = """
+    ?statement: "PRINT" expression                      -> stmt_print
+        | "{" [statement (";" statement)*] ";"? "}"     -> stmt_block
+        | identifier "=" expression                     -> stmt_bind
+        | "PROC" identifier statement                   -> stmt_proc_def
+        | "RUN" identifier  "(" [expression ("," expression)*] ")"    -> stmt_proc_run
+        | "RND" identifier expression expression        -> stmt_rnd
+    
+    # expressions
+    
+    ?expression: conditional
+    
     ?conditional : comparison "?" comparison ":" conditional ->  conditional
         | comparison "?" conditional ":" conditional ->  conditional
         | comparison
@@ -126,10 +133,56 @@ calc_grammar = """
     
     %import common.CNAME -> NAME
     %import common.NUMBER
-    %import common.WS_INLINE
+    %import common.WS
     %import python (STRING)
-    %ignore WS_INLINE
+    %ignore WS
 """
+
+
+class Statement:
+    pass
+
+
+@dataclass
+class Environment:
+    vars: MutableMapping[str, LiteralValue]
+    procedures: MutableMapping[str, Statement]
+    output: list[str]
+
+
+@dataclass
+class StmtPrint(Statement):
+    expression: Expression
+
+
+@dataclass
+class StmtBlock(Statement):
+    statements: Sequence[Statement]
+
+
+@dataclass
+class StmtBind(Statement):
+    identifier: Identifier
+    expression: Expression
+
+
+@dataclass
+class StmtProcDef(Statement):
+    identifier: Identifier
+    statement: Statement
+
+
+@dataclass
+class StmtProcRun(Statement):
+    identifier: Identifier
+    args: Sequence[Expression]
+
+
+@dataclass
+class StmtRnd(Statement):
+    identifier: Identifier
+    minVal: Expression
+    maxVal: Expression
 
 
 @v_args(inline=True)  # Affects the signatures of the methods
@@ -191,10 +244,38 @@ class Ast(Transformer):
     def comp_equal(left, right):
         return ComparisonEqual(left, right)
 
+    @staticmethod
+    def stmt_print(e):
+        return StmtPrint(e)
 
-calc_parser2 = Lark(calc_grammar, parser='lalr', transformer=Ast())
-calc2 = calc_parser2.parse
+    @staticmethod
+    def stmt_block(*l):
+        return StmtBlock(l)
 
+    @staticmethod
+    def stmt_bind(i, expr):
+        return StmtBind(i, expr)
+
+    @staticmethod
+    def stmt_proc_def(i, stmt):
+        return StmtProcDef(i, stmt)
+
+    @staticmethod
+    def stmt_proc_run(i, *args):
+        if args == (None,):
+            return StmtProcRun(i, tuple())
+        return StmtProcRun(i, args)
+
+    @staticmethod
+    def stmt_rnd(i, minVal, maxVal):
+        return StmtRnd(i, minVal, maxVal)
+
+
+stmt_parser = Lark(grammar, parser='lalr', start='statement', transformer=Ast())
+expr_parser = Lark(grammar, parser='lalr', start='expression', transformer=Ast())
+
+
+#
 
 def main():
     while True:
@@ -202,7 +283,7 @@ def main():
             s = input('> ')
         except EOFError:
             break
-        print(calc2(s))
+        print(expr_parser.parse(s))
 
 
 def get_literal_value(v: LiteralValue) -> str | float:
@@ -221,17 +302,41 @@ def get_identifier_value(i: Identifier, env: Environment) -> str:
             return str(evaluate_expression(x, env))
 
 
-def evaluate_expression(e: Expression, env: Environment):
+def get_string_value(v: LiteralValue) -> str:
+    match v:
+        case ValueNumber(n):
+            return str(n)
+        case ValueString(t):
+            return t
+        case ValueFunction(f):
+            # TODO
+            return "FUNC"
+
+def get_numerical_value(v: LiteralValue)-> float:
+    match v:
+        case ValueNumber(n):
+            return n
+        case _ : return 0
+def evaluate_expression(e: Expression, env: Environment) -> LiteralValue:
     match e:
         case ValueNumber(v):
-            return v
+            return ValueNumber(v)
         case ValueString(v):
-            return v
+            return ValueString(v)
+        case ValueFunction(v):
+            return ValueFunction(v)
         case BinaryOp(left, op, right):
-            from operator import add, sub, mul, truediv
+            from operator import sub, mul, truediv
             match op:
                 case "+":
-                    binary = add
+                    l = evaluate_expression(left, env)
+                    r = evaluate_expression(right, env)
+                    match (l, r):
+                        case (ValueNumber(ll), ValueNumber(rr)):
+                            return ValueNumber(ll + rr)
+                        case _:
+                            return ValueString(get_string_value(l) + get_string_value(r))
+
                 case "-":
                     binary = sub
                 case "*":
@@ -240,12 +345,14 @@ def evaluate_expression(e: Expression, env: Environment):
                     binary = truediv
                 case _:
                     raise Exception
-            return binary(evaluate_expression(left, env), evaluate_expression(right, env))
+
+            return ValueNumber(binary(evaluate_expression(left, env), evaluate_expression(right, env)))
         case ExpressionVar(i):
-            return get_literal_value(env.vars[get_identifier_value(i, env)])
+
+            return env.vars[get_identifier_value(i, env)]
         case UnaryOP(left, op):
             match op:
-                case "-": return -evaluate_expression(left)
+                case "-": return ValueNumber(-evaluate_expression(left).value)
         case FuncCall(i, args):
             func = env.vars[get_identifier_value(i, env)]
             if isinstance(func, ValueFunction):
@@ -256,11 +363,12 @@ def evaluate_expression(e: Expression, env: Environment):
             raise Exception
         case ComparisonEqual(left, right):
             if evaluate_expression(left, env) == evaluate_expression(right, env):
-                return 1
+                return ValueNumber(1)
             else:
-                return 0
+                return ValueNumber(0)
         case Conditional(cond, if_true, if_false):
-            if cond == 0:
+            ec = evaluate_expression(cond, env)
+            if ec == ValueNumber(0):
                 return evaluate_expression(if_false, env)
             else:
                 return evaluate_expression(if_true, env)
@@ -271,16 +379,49 @@ def evaluate_expression(e: Expression, env: Environment):
 def environment_with_args(env: Environment, args: Sequence[Value]) -> Environment:
     new_env = deepcopy(env)
     for i, arg in enumerate(args):
-        new_env.vars['_' + str(i)] = arg
+        new_env.vars['_' + str(i)] = evaluate_expression(arg, env)
     return new_env
+
+
+def run_statement(s: Statement, env: Environment) -> None:
+    match s:
+        case StmtPrint(e):
+            res = evaluate_expression(e, env)
+            env.output.append(get_string_value(res))
+            print("PRINT ", evaluate_expression(e, env))
+        case StmtBind(i, e):
+            v = evaluate_expression(e, env)
+            env.vars[get_identifier_value(i, env)] = v
+            print("NE", env)
+        case StmtBlock(ss):
+            for st in ss:
+                run_statement(st, env)
+        case StmtProcDef(i, stmt):
+            env.procedures[get_identifier_value(i, env)] = stmt
+        case StmtProcRun(i, args):
+            stmt = env.procedures[get_identifier_value(i, env)]
+            for i, arg in enumerate(args):
+                env.vars['_' + str(i)] = evaluate_expression(arg, env)
+
+            run_statement(stmt, env)
+        case StmtRnd(i,minVal,maxVal):
+            min_v=get_numerical_value(evaluate_expression(minVal,env))
+            max_v=get_numerical_value(evaluate_expression(maxVal,env))
+
+            env.vars[get_identifier_value(i, env)] = ValueNumber(random.randint(floor(min_v),floor(max_v)))
+        case _:
+            raise Exception("unknown statement")
+
 
 
 def test():
     env: Environment = Environment({'abc': ValueNumber(66)
-                                       , 'fun1': ValueFunction(
-            value=BinaryOp(left=ExpressionVar(IdentifierLiteral(value='_0')), op='+',
-                           right=ExpressionVar(identifier=IdentifierLiteral(value='_1'))))
-                                    })
+                                    , 'fun1': ValueFunction(
+            BinaryOp(ExpressionVar(IdentifierLiteral('_0')), '+',
+                           ExpressionVar(IdentifierLiteral('_1'))))
+                                    },
+                                   {},
+                                   [])
     # print(calc2("a = 1+2"))
     # expr = "5-1+a*(-3-3)==3?1?3:2:4"
     # expr = """ $[ "a"+"b"+"c"] """
@@ -288,14 +429,30 @@ def test():
     print(expr)
     # expr2 = 'abc+4'
     # expr2 = """ $[ "a"+"b"+"c"] + 5 """
-    expr2 = """fun1(2,3)==5?1:0"""
-    parsed3 = calc2(expr2)
+    expr2 = """fun1(2,3)==6?1:0"""
+    # parsed3 = calc2(expr2)
+    parsed3 = expr_parser.parse(expr2)
+
     print("S", parsed3)
     print("EV", evaluate_expression(parsed3, env))
-    parsed = calc2(expr)
-    parsed2 = Lark(calc_grammar, parser='lalr').parse(expr)
+    parsed = expr_parser.parse(expr)
+    # parsed2 = Lark('  ?start: conditional\n'+expression_grammar, parser='lalr').parse(expr)
     print(parsed)
-    print(parsed2.pretty())
+    s1 = """{ g=FUNC _0 + _1;
+    PROC janowa { PRINT _0 ; a66=5 };
+    RUN janowa("X");
+     PRINT g(5,a66); PRINT g(5,6)==10 ? "Jan" : "Test" ;
+     a66=a66+2;
+     PRINT a66;
+     RND xx 2 10;
+     PRINT xx
+     }"""
+    sp1 = stmt_parser.parse(s1)
+    print(sp1)
+    run_statement(sp1, env)
+    pprint(env)
+    # print(parsed2.pretty())
+    # s1 = stmt_parser.parse()
 
 
 if __name__ == '__main__':
