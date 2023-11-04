@@ -131,6 +131,7 @@ grammar = """
         | "RUN" identifier  "(" [expression ("," expression)*] ")"    -> stmt_proc_run
         | "RND" identifier expression expression        -> stmt_rnd
         | "IF" expression "THEN" statement "ELSE" statement -> stmt_if
+        | "EMIT" expression                             -> stmt_emit
     
     # expressions
     
@@ -223,6 +224,11 @@ class StmtIf(Statement):
     if_false: Statement
 
 
+@dataclass
+class StmtEmit(Statement):
+    expression: Expression
+
+
 @v_args(inline=True)  # Affects the signatures of the methods
 class Ast(Transformer):
     @staticmethod
@@ -312,6 +318,10 @@ class Ast(Transformer):
     def stmt_if(cond, if_true, if_false):
         return StmtIf(cond, if_true, if_false)
 
+    @staticmethod
+    def stmt_emit(expr):
+        return StmtEmit(expr)
+
 
 stmt_parser = Lark(grammar, parser='lalr', start='statement', transformer=Ast())
 expr_parser = Lark(grammar, parser='lalr', start='expression', transformer=Ast())
@@ -400,7 +410,7 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
             else:
                 return evaluate_expression(if_true, env)
         case _:
-            print("DIDN'T handle", e)
+            raise Exception("Can't handle EXPR ", e)
 
 
 def environment_with_args(env: Environment, args: Sequence[ExprLiteralValue]) -> Environment:
@@ -419,10 +429,9 @@ def run_statement(s: Statement, env: Environment, emit_handler: Callable[[str], 
         case StmtBind(i, e):
             v = evaluate_expression(e, env)
             env.vars[get_identifier_value(i, env)] = v
-            print("NE", env)
         case StmtBlock(ss):
             for st in ss:
-                run_statement(st, env)
+                run_statement(st, env, emit_handler)
         case StmtProcDef(i, stmt):
             env.procedures[get_identifier_value(i, env)] = stmt
         case StmtProcRun(i, args):
@@ -430,7 +439,7 @@ def run_statement(s: Statement, env: Environment, emit_handler: Callable[[str], 
             for i, arg in enumerate(args):
                 env.vars['_' + str(i)] = evaluate_expression(arg, env)
 
-            run_statement(stmt, env)
+            run_statement(stmt, env, emit_handler)
         case StmtRnd(i, minVal, maxVal):
             min_v = get_numerical_value(evaluate_expression(minVal, env))
             max_v = get_numerical_value(evaluate_expression(maxVal, env))
@@ -438,11 +447,17 @@ def run_statement(s: Statement, env: Environment, emit_handler: Callable[[str], 
             env.vars[get_identifier_value(i, env)] = ValueNumber(random.randint(floor(min_v), floor(max_v)))
         case StmtIf(cond, if_true, if_false):
             if evaluate_expression(cond, env).get_number():
-                run_statement(if_true, env)
+                run_statement(if_true, env, emit_handler)
             else:
-                run_statement(if_false, env)
+                run_statement(if_false, env, emit_handler)
+        case StmtEmit(expression):
+            emit_handler(evaluate_expression(expression, env).get_string())
         case _:
             raise Exception("unknown statement", s)
+
+
+def test_emit_handler(s: str) -> None:
+    print("EMITTED", s)
 
 
 def test():
@@ -478,11 +493,12 @@ def test():
      RND xx 2 10;
      PRINT xx;
      PRINT g;
-     IF xx==5 THEN PRINT "XX"+xx ELSE PRINT "YYY"+xx
+     IF xx==5 THEN PRINT "XX"+xx ELSE PRINT "YYY"+xx;
+     EMIT xx
      }"""
     sp1 = stmt_parser.parse(s1)
     print(sp1)
-    run_statement(sp1, env)
+    run_statement(sp1, env, test_emit_handler)
     pprint(env)
     # print(parsed2.pretty())
     # s1 = stmt_parser.parse()
