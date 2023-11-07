@@ -389,16 +389,17 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
         case ValueFunction(v):
             return ValueFunction(v)
         case ExprBinaryOp(left, op, right):
-            from operator import sub, mul, truediv
+            from operator import sub, mul, truediv, floordiv
+            ev_left=evaluate_expression(left, env)
+            ev_right=evaluate_expression(right, env)
             match op:
                 case "+":
-                    l = evaluate_expression(left, env)
-                    r = evaluate_expression(right, env)
-                    match (l, r):
+
+                    match (ev_left, ev_right):
                         case (ValueNumber(ll), ValueNumber(rr)):
                             return ValueNumber(ll + rr)
                         case _:
-                            return ValueString(l.get_string() + r.get_string())
+                            return ValueString(ev_left.get_string() + ev_right.get_string())
 
                 case "-":
                     binary = sub
@@ -406,10 +407,12 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
                     binary = mul
                 case "/":
                     binary = truediv
+                case "//":
+                    binary = floordiv
                 case _:
-                    raise Exception
+                    raise Exception("Unknown binary: "+op)
 
-            return ValueNumber(binary(evaluate_expression(left, env), evaluate_expression(right, env)))
+            return ValueNumber(binary(ev_left.get_number(), ev_right.get_number()))
         case ExpressionVar(i):
 
             return env.vars[get_identifier_value(i, env)]
