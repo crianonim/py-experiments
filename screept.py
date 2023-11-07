@@ -93,7 +93,7 @@ class ValueFunction(Value):
 
 @dataclass
 class ExprFuncCall(Expression):
-    identifier: str
+    identifier: Identifier
     args: Sequence[ExprLiteralValue]
 
 
