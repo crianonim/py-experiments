@@ -122,6 +122,16 @@ class ExprComparisonEqual(Expression):
     left: Expression
     right: Expression
 
+@dataclass
+class ExprComparisonLess(Expression):
+    left: Expression
+    right: Expression
+
+@dataclass
+class ExprComparisonMore(Expression):
+    left: Expression
+    right: Expression
+
 
 grammar = """
     ?statement: "PRINT" expression                      -> stmt_print
@@ -143,6 +153,8 @@ grammar = """
     
     ?comparison : sum
         | sum "==" sum      -> comp_equal
+        | sum "<" sum       -> comp_less
+        | sum ">" sum       -> comp_more
     
     ?sum: product
         | sum "+" product   -> add
@@ -151,7 +163,7 @@ grammar = """
     ?product: atom
         | product "*" atom  -> mul
         | product "/" atom  -> div
-        |
+        | product "//" atom  -> floordiv
 
     ?atom: NUMBER           -> number
          | "-" atom         -> neg
@@ -290,6 +302,14 @@ class Ast(Transformer):
         return ExprComparisonEqual(left, right)
 
     @staticmethod
+    def comp_less(left, right):
+        return ExprComparisonLess(left, right)
+
+    @staticmethod
+    def comp_more(left, right):
+        return ExprComparisonMore(left, right)
+
+    @staticmethod
     def stmt_print(e):
         return StmtPrint(e)
 
@@ -406,6 +426,17 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
                 return ValueNumber(1)
             else:
                 return ValueNumber(0)
+        case ExprComparisonLess(left, right):
+            if evaluate_expression(left, env).get_number() < evaluate_expression(right, env).get_number():
+                return ValueNumber(1)
+            else:
+                return ValueNumber(0)
+        case ExprComparisonMore(left, right):
+            if evaluate_expression(left, env).get_number() > evaluate_expression(right, env).get_number():
+                return ValueNumber(1)
+            else:
+                return ValueNumber(0)
+
         case ExprConditional(cond, if_true, if_false):
             ec = evaluate_expression(cond, env)
             if ec == ValueNumber(0):
@@ -494,7 +525,7 @@ def test():
      RND xx 2 10;
      PRINT xx;
      PRINT g;
-     IF xx==5 THEN PRINT "XX"+xx ELSE PRINT "YYY"+xx;
+     IF xx<8 THEN PRINT "XX"+xx ELSE PRINT "YYY"+xx;
      EMIT xx
      }"""
     sp1 = stmt_parser.parse(s1)
