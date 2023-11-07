@@ -1,8 +1,10 @@
 import json
-from collections.abc import Sequence
+from collections.abc import Sequence, Mapping
 from dataclasses import dataclass
+from functools import partial
 from pprint import pprint
 import screept
+from typing import Optional
 
 
 def parse_value(d) -> screept.Value:
@@ -39,6 +41,8 @@ def parse_expression(d):
             return screept.ExprFuncCall(parse_identifier(identifier), list(map(parse_expression, args)))
         case {'type': 'parens', 'expression': expr}:
             return parse_expression(expr)
+        case {'type': 'unary_op', 'op': op, 'x': x}:
+            return screept.ExprUnaryOP(parse_expression(x), op)
         # case
         case _:
             pprint(d)
@@ -53,9 +57,20 @@ def parse_statement(x):
             return screept.StmtBind(parse_identifier(identifier), parse_expression(value))
         case {'type': 'proc_run', 'identifier': identifier, 'args': args}:
             return screept.StmtProcRun(parse_identifier(identifier), list(map(parse_expression, args)))
+        case {'type': 'print', 'value': value}:
+            return screept.StmtPrint(parse_expression(value))
+        case {'type': 'random', 'identifier': identifier, 'from': from_value, 'to': to_value}:
+            return screept.StmtRnd(parse_identifier(identifier), parse_expression(from_value),
+                                   parse_expression(to_value))
+        case {'type': 'if', 'condition': condition, 'thenStatement': thenStatement}:
+            if 'elseStatement' in x:
+                return screept.StmtIf(parse_expression(condition), parse_statement(thenStatement),
+                                      parse_statement(x['elseStatement']))
+            else:
+                return screept.StmtIf(parse_expression(condition), parse_statement(thenStatement))
         case _:
             pprint(x)
-            raise "CAN't"
+            raise Exception("CAN't" + x)
 
 
 def process_var(v):
@@ -68,20 +83,156 @@ def process_procedure(v):
     return (name, parse_statement(value))
 
 
-def load_game(title: str):
+@dataclass
+class GameState:
+    environment: screept.Environment
+    dialog_stack: Sequence[str]
+
+
+class DialogAction:
+    pass
+
+
+@dataclass
+class DAGoBack(DialogAction):
+    pass
+
+
+@dataclass
+class DAGoDialog(DialogAction):
+    dialog_id: str
+
+
+@dataclass
+class DAScreept(DialogAction):
+    value: screept.Statement
+
+
+@dataclass
+class DAConditional(DialogAction):
+    condition: screept.Expression
+    then_action: Sequence[DialogAction]
+    else_action: Sequence[DialogAction]
+
+
+@dataclass
+class DAMessage(DialogAction):
+    value: screept.Expression
+
+
+@dataclass
+class Option:
+    id: str
+    text: screept.Expression
+    actions: Sequence[DialogAction]
+    condition: Optional[screept.Expression] = None
+
+
+@dataclass
+class Dialog:
+    id: str
+    text: screept.Expression
+    options: Sequence[Option]
+
+
+@dataclass
+class GameDefinition:
+    game_state: GameState
+    dialogs: Mapping[str, Dialog]
+
+
+def parse_action(x) -> DialogAction:
+    match x:
+        case {'type': 'go back'}:
+            return DAGoBack()
+        case {'type': 'go_dialog', 'destination': destination}:
+            return DAGoDialog(destination)
+        case {'type': 'screept', 'value': value}:
+            return DAScreept(parse_statement(value))
+        case {'type': 'conditional', 'if': condition, 'then': then_actions, 'else': else_actions}:
+            return DAConditional(parse_expression(condition), list(map(parse_action, then_actions)),
+                                 list(map(parse_action, else_actions)))
+        case {'type': 'msg', 'value': value}:
+            return DAMessage(parse_expression(value))
+        case _:
+            pprint(x)
+            raise Exception("CANT" + x)
+
+
+def parse_option(x) -> Option:
+    if 'condition' in x:
+        condition = (parse_expression(x['condition']))
+    else:
+        condition = None
+    text = parse_expression(x['text'])
+    actions = list(map(parse_action, x['actions']))
+    return Option(x['id'], text, actions, condition)
+
+
+def parse_dialog(x) -> Dialog:
+    return Dialog(x['id'], parse_expression(x['text']), list(map(parse_option, x['options'])))
+
+
+def load_game(title: str) -> GameDefinition:
     with open("data/" + title + ".json", "r") as f:
         data = json.load(f)
         game_state = data['gameState']
+        # print(data.keys())
         env = game_state['screeptEnv']
-        print(env.keys())
-        vars = (dict(map(process_var, env['vars'].items())))
+        dialog_stack: Sequence[str] = game_state['dialogStack']
+        # print(data['dialogs'])
+        dialogs = [(x[0], parse_dialog(x[1])) for x in data['dialogs'].items()]
+        # pprint(dialogs)
+        variables = (dict(map(process_var, env['vars'].items())))
         procedures = (dict(map(process_procedure, env['procedures'].items())))
         # pprint(procedures)
-        environment: screept.Environment = screept.Environment(vars, procedures, [])
-        pprint(environment)
-        return data
+        environment: screept.Environment = screept.Environment(variables, procedures, [])
+        # pprint(environment)
+
+        return GameDefinition(GameState(environment, dialog_stack), dict(dialogs))
+
+
+def get_status_line(env: screept.Environment):
+    if '__statusLine' in env.vars:
+        parsed = screept.expr_parser.parse('__statusLine()')
+        return screept.evaluate_expression(parsed, env).get_string()
+    else:
+        return ""
+
+
+def is_option_visible(env: screept.Environment, option: Option) -> bool:
+    match option.condition:
+        case None:
+            return True
+        case ex:
+            return screept.evaluate_expression(ex, env).get_number() != 0
+
+
+def get_visible_options(options: Sequence[Option], env: screept.Environment) -> Sequence[Option]:
+    return list(filter(partial(is_option_visible, env), options))
+
+
+def show_option(option: Option, env: screept.Environment):
+    text = screept.evaluate_expression(option.text, env).get_string()
+    return text
+
+
+def show_dialog(dialogs: Mapping[str, Dialog], dialog_id: str, env: screept.Environment):
+    dialog = dialogs[dialog_id]
+    pprint(dialog)
+    status_line = get_status_line(env)
+    if status_line:
+        print(status_line)
+    print(screept.evaluate_expression(dialog.text, env).get_string())
+    visible_options = get_visible_options(dialog.options, env)
+    for i, opt in enumerate(visible_options):
+        print(i + 1, show_option(opt, env))
+
+    # pprint(env.vars)
 
 
 if __name__ == "__main__":
-    # load_game("fable")
-    load_game("customGame")
+    game_definition = load_game("fable")
+    # game_definition = load_game("customGame")
+    show_dialog(game_definition.dialogs, game_definition.game_state.dialog_stack[0],
+                game_definition.game_state.environment)
