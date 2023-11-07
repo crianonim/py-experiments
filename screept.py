@@ -168,7 +168,7 @@ grammar = """
     ?atom: NUMBER           -> number
          | "-" atom         -> neg
          | "FUNC" conditional -> func
-         | identifier "(" [conditional ("," conditional)*] ")" -> func_call
+         | identifier "(" (conditional ("," conditional)*)* ")" -> func_call
          | identifier             -> var
          | "(" conditional ")"
          | STRING           -> string
