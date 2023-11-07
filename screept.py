@@ -9,7 +9,7 @@ from collections.abc import MutableMapping, Callable
 from copy import deepcopy
 from math import floor
 from pprint import pprint
-from typing import Sequence, override
+from typing import Sequence, override, Optional
 from abc import ABC, abstractmethod
 from lark import Lark, Transformer, v_args, Token, tree
 from dataclasses import dataclass
@@ -122,10 +122,12 @@ class ExprComparisonEqual(Expression):
     left: Expression
     right: Expression
 
+
 @dataclass
 class ExprComparisonLess(Expression):
     left: Expression
     right: Expression
+
 
 @dataclass
 class ExprComparisonMore(Expression):
@@ -234,7 +236,7 @@ class StmtRnd(Statement):
 class StmtIf(Statement):
     condition: Identifier
     if_true: Statement
-    if_false: Statement
+    if_false: Optional[Statement]=None
 
 
 @dataclass
@@ -483,7 +485,10 @@ def run_statement(s: Statement, env: Environment, emit_handler: Callable[[str], 
             if evaluate_expression(cond, env).get_number():
                 run_statement(if_true, env, emit_handler)
             else:
-                run_statement(if_false, env, emit_handler)
+                if if_false is None:
+                    pass
+                else:
+                    run_statement(if_false, env, emit_handler)
         case StmtEmit(expression):
             emit_handler(evaluate_expression(expression, env).get_string())
         case _:
