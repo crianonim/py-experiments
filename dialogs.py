@@ -29,7 +29,15 @@ def parse_identifier(d) -> screept.Identifier:
 def parse_expression(d):
     match (d):
         case {'type': 'binary_op', 'op': op, 'x': left, 'y': right}:
-            return screept.ExprBinaryOp(parse_expression(left), op, parse_expression(right))
+            match op:
+                case "==":
+                    return screept.ExprComparisonEqual(parse_expression(left), parse_expression(right))
+                case "<":
+                    return screept.ExprComparisonLess(parse_expression(left), parse_expression(right))
+                case ">":
+                    return screept.ExprComparisonMore(parse_expression(left), parse_expression(right))
+                case _:
+                    return screept.ExprBinaryOp(parse_expression(left), op, parse_expression(right))
         case {'type': 'conditon', 'condition': expr, 'onFalse': on_false, 'onTrue': on_true}:
             return screept.ExprConditional(parse_expression(expr), parse_expression(on_true),
                                            parse_expression(on_false))
@@ -86,7 +94,7 @@ def process_procedure(v):
 @dataclass
 class GameState:
     environment: screept.Environment
-    dialog_stack: Sequence[str]
+    dialog_stack: list[str]
 
 
 class DialogAction:
@@ -231,8 +239,42 @@ def show_dialog(dialogs: Mapping[str, Dialog], dialog_id: str, env: screept.Envi
     # pprint(env.vars)
 
 
-if __name__ == "__main__":
-    game_definition = load_game("fable")
-    # game_definition = load_game("customGame")
+def execute_action(game: GameDefinition, action: DialogAction):
+    match action:
+        case DAGoDialog(dialog_id):
+            game.game_state.dialog_stack.insert(0, dialog_id)
+        case DAScreept(value):
+            screept.run_statement(value, game.game_state.environment)
+        case DAMessage(value):
+            print("MESSAGE:")
+            print(screept.evaluate_expression(value,game.game_state.environment).get_string())
+        case _:
+            pprint(action)
+            raise Exception("NO handler for ACTION")
+
+
+def loop(game_definition):
+    dialog = game_definition.dialogs[game_definition.game_state.dialog_stack[0]]
     show_dialog(game_definition.dialogs, game_definition.game_state.dialog_stack[0],
                 game_definition.game_state.environment)
+    selected = input("Choose option")
+    try:
+        opt_no = int(selected)
+        option = get_visible_options(dialog.options, game_definition.game_state.environment)[opt_no - 1]
+
+
+    except:
+        loop(game_definition)
+    else:
+        pprint(option)
+        for action in option.actions:
+            execute_action(game_definition, action)
+        loop(game_definition)
+
+
+if __name__ == "__main__":
+    game_definition = load_game("fable")
+    loop(game_definition)
+    # game_definition = load_game("customGame")
+    # show_dialog(game_definition.dialogs, game_definition.game_state.dialog_stack[0],
+    #             game_definition.game_state.environment)
