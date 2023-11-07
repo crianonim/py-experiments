@@ -361,7 +361,8 @@ def get_literal_value(v: Value) -> str | float:
             return x
         case ValueString(x):
             return x
-
+        case _:
+            raise Exception("wrong param")
 
 def get_identifier_value(i: Identifier, env: Environment) -> str:
     match i:
@@ -369,7 +370,7 @@ def get_identifier_value(i: Identifier, env: Environment) -> str:
             return x
         case IdentifierComputed(x):
             return str(evaluate_expression(x, env))
-
+        case _: raise Exception("Wrong identifier")
 
 def get_numerical_value(v: Value) -> float:
     match v:
@@ -415,6 +416,12 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
         case ExprUnaryOP(left, op):
             match op:
                 case "-": return ValueNumber(-evaluate_expression(left, env).get_number())
+                case "!":
+                    if evaluate_expression(left, env).get_number():
+                        return ValueNumber(0)
+                    else:
+                        return ValueNumber(1)
+                case _: raise Exception("Unknown Unary"+op)
         case ExprFuncCall(i, args):
             func = env.vars[get_identifier_value(i, env)]
             if isinstance(func, ValueFunction):
