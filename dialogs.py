@@ -8,7 +8,7 @@ from typing import Optional
 
 
 def parse_value(d) -> screept.Value:
-    match (d):
+    match d:
 
         case {"type": "number", "value": x}:
             return screept.ValueNumber(x)
@@ -21,13 +21,13 @@ def parse_value(d) -> screept.Value:
 
 
 def parse_identifier(d) -> screept.Identifier:
-    match (d):
+    match d:
         case {"type": 'literal', 'value': v}:
             return screept.IdentifierLiteral(v)
 
 
 def parse_expression(d):
-    match (d):
+    match d:
         case {'type': 'binary_op', 'op': op, 'x': left, 'y': right}:
             match op:
                 case "==":
@@ -129,6 +129,11 @@ class DAMessage(DialogAction):
 
 
 @dataclass
+class DABlock(DialogAction):
+    actions: Sequence[DialogAction]
+
+
+@dataclass
 class Option:
     id: str
     text: screept.Expression
@@ -162,6 +167,8 @@ def parse_action(x) -> DialogAction:
                                  list(map(parse_action, else_actions)))
         case {'type': 'msg', 'value': value}:
             return DAMessage(parse_expression(value))
+        case {'type': 'block', 'actions': actions}:
+            return DABlock(list(map(parse_action, actions)))
         case _:
             pprint(x)
             raise Exception("CANT" + x)
@@ -249,7 +256,7 @@ def execute_action(game: GameDefinition, action: DialogAction):
             screept.run_statement(value, game.game_state.environment)
         case DAMessage(value):
             print("MESSAGE:")
-            print(screept.evaluate_expression(value,game.game_state.environment).get_string())
+            print(screept.evaluate_expression(value, game.game_state.environment).get_string())
         case _:
             pprint(action)
             raise Exception("NO handler for ACTION")
