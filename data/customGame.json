@@ -1,339 +1,706 @@
 {
-  "gameState": {
-    "screeptEnv": {
-      "vars": {
-        "turn": { "type": "number", "value": 220 },
-        "money": { "type": "number", "value": 100 },
-        "__statusLine": {
-          "type": "func",
-          "value": {
-            "type": "binary_op",
-            "x": {
-              "type": "binary_op",
-              "x": {
-                "type": "binary_op",
-                "x": {
-                  "type": "binary_op",
-                  "x": {
-                    "type": "binary_op",
-                    "x": {
-                      "type": "binary_op",
-                      "x": {
-                        "type": "binary_op",
-                        "x": {
-                          "type": "literal",
-                          "value": { "type": "text", "value": "Turn: " }
-                        },
-                        "op": "+",
-                        "y": {
-                          "type": "var",
-                          "identifier": { "type": "literal", "value": "turn" }
-                        }
-                      },
-                      "op": "+",
-                      "y": {
-                        "type": "literal",
-                        "value": { "type": "text", "value": ". You have " }
-                      }
-                    },
-                    "op": "+",
-                    "y": {
-                      "type": "var",
-                      "identifier": { "type": "literal", "value": "money" }
-                    }
-                  },
-                  "op": "+",
-                  "y": {
-                    "type": "literal",
-                    "value": { "type": "text", "value": " coins. Stamina: " }
-                  }
-                },
-                "op": "+",
-                "y": {
-                  "type": "var",
-                  "identifier": { "type": "literal", "value": "stamina" }
-                }
-              },
-              "op": "+",
-              "y": {
-                "type": "literal",
-                "value": { "type": "text", "value": ". " }
-              }
-            },
-            "op": "+",
-            "y": {
-              "type": "fun_call",
-              "identifier": { "type": "literal", "value": "displayTime" },
-              "args": []
-            }
-          }
-        },
-        "stamina": { "type": "number", "value": 100 },
-        "r1": { "type": "number", "value": 3 },
-        "inv_wood": { "type": "number", "value": 23 },
-        "mod": {
-          "type": "func",
-          "value": {
-            "type": "binary_op",
-            "x": {
-              "type": "var",
-              "identifier": { "type": "literal", "value": "_0" }
-            },
-            "op": "-",
-            "y": {
-              "type": "binary_op",
-              "x": {
-                "type": "parens",
-                "expression": {
-                  "type": "binary_op",
-                  "op": "//",
-                  "x": {
-                    "type": "var",
-                    "identifier": { "type": "literal", "value": "_0" }
-                  },
-                  "y": {
-                    "type": "var",
-                    "identifier": { "type": "literal", "value": "_1" }
-                  }
-                }
-              },
-              "op": "*",
-              "y": {
-                "type": "var",
-                "identifier": { "type": "literal", "value": "_1" }
-              }
-            }
-          }
-        },
-        "_minutes_by_turn": { "type": "number", "value": 15 },
-        "_turns_by_hour": { "type": "number", "value": 4 },
-        "_turns_by_day": { "type": "number", "value": 96 },
-        "day": { "type": "number", "value": 1 },
-        "hour": { "type": "number", "value": 23 },
-        "minutes": { "type": "number", "value": 30 },
-        "displayTime": {
-          "type": "func",
-          "value": {
-            "type": "binary_op",
-            "x": {
-              "type": "binary_op",
-              "x": {
-                "type": "binary_op",
-                "x": {
-                  "type": "binary_op",
-                  "x": {
-                    "type": "binary_op",
-                    "x": {
-                      "type": "literal",
-                      "value": { "type": "text", "value": "Day " }
-                    },
-                    "op": "+",
-                    "y": {
-                      "type": "parens",
-                      "expression": {
-                        "type": "binary_op",
-                        "x": {
-                          "type": "var",
-                          "identifier": { "type": "literal", "value": "day" }
-                        },
-                        "op": "+",
-                        "y": {
-                          "type": "literal",
-                          "value": { "type": "number", "value": 1 }
-                        }
-                      }
-                    }
-                  },
-                  "op": "+",
-                  "y": {
-                    "type": "literal",
-                    "value": { "type": "text", "value": ", " }
-                  }
-                },
-                "op": "+",
-                "y": {
-                  "type": "var",
-                  "identifier": { "type": "literal", "value": "hour" }
-                }
-              },
-              "op": "+",
-              "y": {
-                "type": "literal",
-                "value": { "type": "text", "value": ":" }
-              }
-            },
-            "op": "+",
-            "y": {
-              "type": "parens",
-              "expression": {
-                "type": "condition",
-                "condition": {
-                  "type": "var",
-                  "identifier": { "type": "literal", "value": "minutes" }
-                },
-                "onTrue": {
-                  "type": "var",
-                  "identifier": { "type": "literal", "value": "minutes" }
-                },
-                "onFalse": {
-                  "type": "literal",
-                  "value": { "type": "text", "value": "00" }
-                }
-              }
-            }
-          }
-        },
-        "_0": { "type": "number", "value": 10 },
-        "_specialOption": { "type": "text", "value": "menu" },
-        "displayInv": {
-          "type": "func",
-          "value": {
-            "type": "condition",
-            "condition": {
-              "type": "var",
-              "identifier": { "type": "literal", "value": "_0" }
-            },
-            "onTrue": {
-              "type": "binary_op",
-              "x": {
-                "type": "binary_op",
-                "x": {
-                  "type": "var",
-                  "identifier": { "type": "literal", "value": "_1" }
-                },
-                "op": "+",
-                "y": {
-                  "type": "literal",
-                  "value": { "type": "text", "value": ": " }
-                }
-              },
-              "op": "+",
-              "y": {
-                "type": "var",
-                "identifier": { "type": "literal", "value": "_0" }
-              }
-            },
-            "onFalse": {
-              "type": "literal",
-              "value": { "type": "text", "value": "" }
-            }
-          }
-        },
-        "inv_berries": { "type": "number", "value": 86 }
+  "dialogs": {
+    "start": {
+      "id": "start",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "You are in the Village."
+        }
       },
-      "procedures": {
-        "setTime": {
-          "type": "block",
-          "statements": [
+      "options": [
+        {
+          "id": "417cdc3d-b9b5-40c3-b460-57c14b9ea1c7",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Go to your farm"
+            }
+          },
+          "actions": [
             {
-              "type": "bind",
-              "identifier": { "type": "literal", "value": "day" },
-              "value": {
-                "type": "binary_op",
-                "op": "//",
-                "x": {
-                  "type": "var",
-                  "identifier": { "type": "literal", "value": "turn" }
-                },
-                "y": {
-                  "type": "var",
-                  "identifier": { "type": "literal", "value": "_turns_by_day" }
-                }
-              }
-            },
-            {
-              "type": "bind",
-              "identifier": { "type": "literal", "value": "hour" },
-              "value": {
-                "type": "binary_op",
-                "op": "//",
-                "x": {
-                  "type": "fun_call",
-                  "identifier": { "type": "literal", "value": "mod" },
-                  "args": [
-                    {
-                      "type": "var",
-                      "identifier": { "type": "literal", "value": "turn" }
-                    },
-                    {
-                      "type": "var",
-                      "identifier": {
-                        "type": "literal",
-                        "value": "_turns_by_day"
-                      }
-                    }
-                  ]
-                },
-                "y": {
-                  "type": "var",
-                  "identifier": { "type": "literal", "value": "_turns_by_hour" }
-                }
-              }
-            },
-            {
-              "type": "bind",
-              "identifier": { "type": "literal", "value": "minutes" },
-              "value": {
-                "type": "binary_op",
-                "x": {
-                  "type": "fun_call",
-                  "identifier": { "type": "literal", "value": "mod" },
-                  "args": [
-                    {
-                      "type": "var",
-                      "identifier": { "type": "literal", "value": "turn" }
-                    },
-                    {
-                      "type": "var",
-                      "identifier": {
-                        "type": "literal",
-                        "value": "_turns_by_hour"
-                      }
-                    }
-                  ]
-                },
-                "op": "*",
-                "y": {
-                  "type": "var",
-                  "identifier": {
-                    "type": "literal",
-                    "value": "_minutes_by_turn"
-                  }
-                }
-              }
+              "type": "go_dialog",
+              "destination": "farm",
+              "id": "6566e759-0b70-4f99-b4d4-0d1226485456"
             }
           ]
         },
-        "passTurn": {
-          "type": "block",
-          "statements": [
+        {
+          "id": "bd1bf57d-8c74-4110-817c-48af472bd822",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Go to the forest"
+            }
+          },
+          "actions": [
             {
-              "type": "bind",
-              "identifier": { "type": "literal", "value": "turn" },
+              "type": "go_dialog",
+              "destination": "forest",
+              "id": "b5aff1b4-9823-42fa-96a6-d178543d87c5"
+            }
+          ]
+        }
+      ]
+    },
+    "farm": {
+      "id": "farm",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "You are at your farm."
+        }
+      },
+      "options": [
+        {
+          "id": "d0452f9c-ad6f-43a0-9b69-98a8b8eca422",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Go to your home"
+            }
+          },
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "home",
+              "id": "2bd56787-f1af-4507-8a95-3ddcde840dbd"
+            }
+          ]
+        },
+        {
+          "id": "4305746d-5afe-403a-bba7-899d2c28bac1",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Go back to the Village"
+            }
+          },
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "start",
+              "id": "2372f5e9-82e3-4db6-9ccb-63ce76c90485"
+            }
+          ]
+        },
+        {
+          "id": "1b6f1d5f-211f-4c79-a539-88815b17a7bd",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Go Back"
+            }
+          },
+          "actions": [
+            {
+              "type": "go back",
+              "id": "ae82ac97-2526-44b3-a0aa-5c354f4ab44a"
+            }
+          ]
+        }
+      ]
+    },
+    "home": {
+      "id": "home",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "You are home"
+        }
+      },
+      "options": [
+        {
+          "id": "9e6ce176-9979-4b5c-9569-95c0f1a9f232",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Go Back"
+            }
+          },
+          "actions": [
+            {
+              "type": "go back",
+              "id": "a87f581d-51d6-44ff-86c3-89ede1ea6cdc"
+            }
+          ]
+        },
+        {
+          "id": "c9ca0198-a8ae-47ab-a443-8a275c2bbf9c",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Sleep 10 turns"
+            }
+          },
+          "actions": [
+            {
+              "type": "screept",
               "value": {
-                "type": "binary_op",
-                "x": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "print",
+                    "value": {
+                      "type": "literal",
+                      "value": {
+                        "type": "text",
+                        "value": "You slept"
+                      }
+                    }
+                  },
+                  {
+                    "type": "proc_run",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "passTurn"
+                    },
+                    "args": [
+                      {
+                        "type": "literal",
+                        "value": {
+                          "type": "number",
+                          "value": 10
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "id": "e6d6a339-2702-4724-87bb-c3795ded1162"
+            }
+          ]
+        }
+      ]
+    },
+    "forest": {
+      "id": "forest",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "You are in the forest."
+        }
+      },
+      "options": [
+        {
+          "id": "c09b2de9-25bf-40f2-b73e-3d956a866516",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Chop wood"
+            }
+          },
+          "condition": {
+            "type": "binary_op",
+            "op": ">",
+            "x": {
+              "type": "var",
+              "identifier": {
+                "type": "literal",
+                "value": "stamina"
+              }
+            },
+            "y": {
+              "type": "literal",
+              "value": {
+                "type": "number",
+                "value": 9
+              }
+            }
+          },
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "random",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "r1"
+                    },
+                    "from": {
+                      "type": "literal",
+                      "value": {
+                        "type": "number",
+                        "value": 1
+                      }
+                    },
+                    "to": {
+                      "type": "literal",
+                      "value": {
+                        "type": "number",
+                        "value": 4
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "inv_wood"
+                    },
+                    "value": {
+                      "type": "binary_op",
+                      "op": "+",
+                      "x": {
+                        "type": "var",
+                        "identifier": {
+                          "type": "literal",
+                          "value": "inv_wood"
+                        }
+                      },
+                      "y": {
+                        "type": "var",
+                        "identifier": {
+                          "type": "literal",
+                          "value": "r1"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "stamina"
+                    },
+                    "value": {
+                      "type": "binary_op",
+                      "op": "-",
+                      "x": {
+                        "type": "var",
+                        "identifier": {
+                          "type": "literal",
+                          "value": "stamina"
+                        }
+                      },
+                      "y": {
+                        "type": "literal",
+                        "value": {
+                          "type": "number",
+                          "value": 10
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "turn"
+                    },
+                    "value": {
+                      "type": "binary_op",
+                      "op": "+",
+                      "x": {
+                        "type": "var",
+                        "identifier": {
+                          "type": "literal",
+                          "value": "turn"
+                        }
+                      },
+                      "y": {
+                        "type": "literal",
+                        "value": {
+                          "type": "number",
+                          "value": 10
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "print",
+                    "value": {
+                      "type": "binary_op",
+                      "op": "+",
+                      "x": {
+                        "type": "binary_op",
+                        "op": "+",
+                        "x": {
+                          "type": "literal",
+                          "value": {
+                            "type": "text",
+                            "value": "You chopped "
+                          }
+                        },
+                        "y": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "r1"
+                          }
+                        }
+                      },
+                      "y": {
+                        "type": "literal",
+                        "value": {
+                          "type": "text",
+                          "value": " wood."
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "id": "2c7c0c49-9ca7-4652-a310-0b4d83e7e890"
+            }
+          ]
+        },
+        {
+          "id": "f22f2271-46ea-45aa-a72c-eb169c399471",
+          "actions": [
+            {
+              "type": "go back",
+              "id": "3bc4ac91-9241-43e2-83f4-99aec6ea769e"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Go Back"
+            }
+          }
+        }
+      ]
+    },
+    "menu": {
+      "id": "menu",
+      "text": {
+        "type": "binary_op",
+        "op": "+",
+        "x": {
+          "type": "binary_op",
+          "op": "+",
+          "x": {
+            "type": "binary_op",
+            "op": "+",
+            "x": {
+              "type": "literal",
+              "value": {
+                "type": "text",
+                "value": "You have "
+              }
+            },
+            "y": {
+              "type": "fun_call",
+              "identifier": {
+                "type": "literal",
+                "value": "displayInv"
+              },
+              "args": [
+                {
                   "type": "var",
-                  "identifier": { "type": "literal", "value": "turn" }
+                  "identifier": {
+                    "type": "literal",
+                    "value": "inv_wood"
+                  }
                 },
-                "op": "+",
-                "y": {
-                  "type": "var",
-                  "identifier": { "type": "literal", "value": "_0" }
+                {
+                  "type": "literal",
+                  "value": {
+                    "type": "text",
+                    "value": "wood"
+                  }
                 }
+              ]
+            }
+          },
+          "y": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": ", "
+            }
+          }
+        },
+        "y": {
+          "type": "fun_call",
+          "identifier": {
+            "type": "literal",
+            "value": "displayInv"
+          },
+          "args": [
+            {
+              "type": "var",
+              "identifier": {
+                "type": "literal",
+                "value": "inv_berries"
               }
             },
             {
-              "type": "proc_run",
-              "identifier": { "type": "literal", "value": "setTime" },
-              "args": []
+              "type": "literal",
+              "value": {
+                "type": "text",
+                "value": "berries"
+              }
             }
           ]
         }
       },
-      "output": []
+      "options": [
+        {
+          "id": "18277606-cbc3-4579-9241-ae389dcbe50e",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Consume"
+            }
+          },
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "_specialConsume",
+              "id": "8b782875-b946-44ec-916a-9f3db5483cc7"
+            }
+          ]
+        },
+        {
+          "id": "1f5c5219-16c6-4d28-acd9-0d90bd3ab102",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Go Back"
+            }
+          },
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "bind",
+                "identifier": {
+                  "type": "literal",
+                  "value": "_specialOption"
+                },
+                "value": {
+                  "type": "literal",
+                  "value": {
+                    "type": "text",
+                    "value": "menu"
+                  }
+                }
+              },
+              "id": "3c1069f1-31a5-47a3-98b4-81ec309f1416"
+            },
+            {
+              "type": "go back",
+              "id": "4b99cb22-fe2b-42c8-adba-a8d44ee698c4"
+            }
+          ]
+        }
+      ]
     },
+    "_specialConsume": {
+      "id": "_specialConsume",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "Use item"
+        }
+      },
+      "options": [
+        {
+          "id": "5a7af0e7-12e9-41f3-9586-d8b7da90d184",
+          "text": {
+            "type": "binary_op",
+            "op": "+",
+            "x": {
+              "type": "binary_op",
+              "op": "+",
+              "x": {
+                "type": "literal",
+                "value": {
+                  "type": "text",
+                  "value": "Eat a berry (have "
+                }
+              },
+              "y": {
+                "type": "var",
+                "identifier": {
+                  "type": "literal",
+                  "value": "inv_berries"
+                }
+              }
+            },
+            "y": {
+              "type": "literal",
+              "value": {
+                "type": "text",
+                "value": ")"
+              }
+            }
+          },
+          "condition": {
+            "type": "binary_op",
+            "op": ">",
+            "x": {
+              "type": "var",
+              "identifier": {
+                "type": "literal",
+                "value": "inv_berries"
+              }
+            },
+            "y": {
+              "type": "literal",
+              "value": {
+                "type": "number",
+                "value": 0
+              }
+            }
+          },
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "inv_berries"
+                    },
+                    "value": {
+                      "type": "binary_op",
+                      "op": "-",
+                      "x": {
+                        "type": "var",
+                        "identifier": {
+                          "type": "literal",
+                          "value": "inv_berries"
+                        }
+                      },
+                      "y": {
+                        "type": "literal",
+                        "value": {
+                          "type": "number",
+                          "value": 1
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "stamina"
+                    },
+                    "value": {
+                      "type": "condition",
+                      "condition": {
+                        "type": "parens",
+                        "expression": {
+                          "type": "binary_op",
+                          "op": ">",
+                          "x": {
+                            "type": "binary_op",
+                            "op": "+",
+                            "x": {
+                              "type": "var",
+                              "identifier": {
+                                "type": "literal",
+                                "value": "stamina"
+                              }
+                            },
+                            "y": {
+                              "type": "literal",
+                              "value": {
+                                "type": "number",
+                                "value": 20
+                              }
+                            }
+                          },
+                          "y": {
+                            "type": "literal",
+                            "value": {
+                              "type": "number",
+                              "value": 100
+                            }
+                          }
+                        }
+                      },
+                      "onTrue": {
+                        "type": "literal",
+                        "value": {
+                          "type": "number",
+                          "value": 100
+                        }
+                      },
+                      "onFalse": {
+                        "type": "binary_op",
+                        "op": "+",
+                        "x": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "stamina"
+                          }
+                        },
+                        "y": {
+                          "type": "literal",
+                          "value": {
+                            "type": "number",
+                            "value": 20
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "print",
+                    "value": {
+                      "type": "literal",
+                      "value": {
+                        "type": "text",
+                        "value": "You ate a berry."
+                      }
+                    }
+                  }
+                ]
+              },
+              "id": "eb953f6d-3fb9-4912-8c4e-cd41a2f77d27"
+            }
+          ]
+        },
+        {
+          "id": "091abb71-30cd-4651-8860-a3253b918674",
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Go Back"
+            }
+          },
+          "actions": [
+            {
+              "type": "go back",
+              "id": "065a7d13-9f33-432f-bee8-deed1423a9a4"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "gameState": {
     "dialogStack": [
+      "forest",
       "start",
       "farm",
       "_specialconsume",
@@ -352,495 +719,512 @@
       "start",
       "farm",
       "start"
-    ]
-  },
-  "dialogs": {
-    "start": {
-      "id": "start",
-      "text": {
-        "type": "literal",
-        "value": { "type": "text", "value": "You are in the Village." }
-      },
-      "options": [
-        {
-          "id": "417cdc3d-b9b5-40c3-b460-57c14b9ea1c7",
-          "actions": [
-            {
-              "type": "go_dialog",
-              "destination": "farm",
-              "id": "6566e759-0b70-4f99-b4d4-0d1226485456"
-            }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Go to your farm" }
-          }
+    ],
+    "screeptEnv": {
+      "vars": {
+        "turn": {
+          "type": "number",
+          "value": 250
         },
-        {
-          "id": "bd1bf57d-8c74-4110-817c-48af472bd822",
-          "actions": [
-            {
-              "type": "go_dialog",
-              "destination": "forest",
-              "id": "b5aff1b4-9823-42fa-96a6-d178543d87c5"
-            }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Go to the forest" }
-          }
-        }
-      ]
-    },
-    "farm": {
-      "id": "farm",
-      "text": {
-        "type": "literal",
-        "value": { "type": "text", "value": "You are at your farm." }
-      },
-      "options": [
-        {
-          "id": "d0452f9c-ad6f-43a0-9b69-98a8b8eca422",
-          "actions": [
-            {
-              "type": "go_dialog",
-              "destination": "home",
-              "id": "2bd56787-f1af-4507-8a95-3ddcde840dbd"
-            }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Go to your home" }
-          }
+        "money": {
+          "type": "number",
+          "value": 100
         },
-        {
-          "id": "4305746d-5afe-403a-bba7-899d2c28bac1",
-          "actions": [
-            {
-              "type": "go_dialog",
-              "destination": "start",
-              "id": "2372f5e9-82e3-4db6-9ccb-63ce76c90485"
-            }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Go back to the Village" }
-          }
-        },
-        {
-          "id": "1b6f1d5f-211f-4c79-a539-88815b17a7bd",
-          "actions": [
-            { "type": "go back", "id": "ae82ac97-2526-44b3-a0aa-5c354f4ab44a" }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Go Back" }
-          }
-        }
-      ]
-    },
-    "home": {
-      "id": "home",
-      "text": {
-        "type": "literal",
-        "value": { "type": "text", "value": "You are home" }
-      },
-      "options": [
-        {
-          "id": "9e6ce176-9979-4b5c-9569-95c0f1a9f232",
-          "actions": [
-            { "type": "go back", "id": "a87f581d-51d6-44ff-86c3-89ede1ea6cdc" }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Go Back" }
-          }
-        },
-        {
-          "id": "c9ca0198-a8ae-47ab-a443-8a275c2bbf9c",
-          "actions": [
-            {
-              "type": "screept",
-              "value": {
-                "type": "block",
-                "statements": [
-                  {
-                    "type": "print",
-                    "value": {
-                      "type": "literal",
-                      "value": { "type": "text", "value": "You slept" }
-                    }
-                  },
-                  {
-                    "type": "proc_run",
-                    "identifier": { "type": "literal", "value": "passTurn" },
-                    "args": [
-                      {
-                        "type": "literal",
-                        "value": { "type": "number", "value": 10 }
-                      }
-                    ]
-                  }
-                ]
-              },
-              "id": "e6d6a339-2702-4724-87bb-c3795ded1162"
-            }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Sleep 10 turns" }
-          }
-        }
-      ]
-    },
-    "forest": {
-      "id": "forest",
-      "text": {
-        "type": "literal",
-        "value": { "type": "text", "value": "You are in the forest." }
-      },
-      "options": [
-        {
-          "id": "c09b2de9-25bf-40f2-b73e-3d956a866516",
-          "actions": [
-            {
-              "type": "screept",
-              "value": {
-                "type": "block",
-                "statements": [
-                  {
-                    "type": "random",
-                    "identifier": { "type": "literal", "value": "r1" },
-                    "from": {
-                      "type": "literal",
-                      "value": { "type": "number", "value": 1 }
-                    },
-                    "to": {
-                      "type": "literal",
-                      "value": { "type": "number", "value": 4 }
-                    }
-                  },
-                  {
-                    "type": "bind",
-                    "identifier": { "type": "literal", "value": "inv_wood" },
-                    "value": {
+        "__statusLine": {
+          "type": "func",
+          "value": {
+            "type": "binary_op",
+            "op": "+",
+            "x": {
+              "type": "binary_op",
+              "op": "+",
+              "x": {
+                "type": "binary_op",
+                "op": "+",
+                "x": {
+                  "type": "binary_op",
+                  "op": "+",
+                  "x": {
+                    "type": "binary_op",
+                    "op": "+",
+                    "x": {
                       "type": "binary_op",
-                      "x": {
-                        "type": "var",
-                        "identifier": { "type": "literal", "value": "inv_wood" }
-                      },
                       "op": "+",
-                      "y": {
-                        "type": "var",
-                        "identifier": { "type": "literal", "value": "r1" }
-                      }
-                    }
-                  },
-                  {
-                    "type": "bind",
-                    "identifier": { "type": "literal", "value": "stamina" },
-                    "value": {
-                      "type": "binary_op",
-                      "x": {
-                        "type": "var",
-                        "identifier": { "type": "literal", "value": "stamina" }
-                      },
-                      "op": "-",
-                      "y": {
-                        "type": "literal",
-                        "value": { "type": "number", "value": 10 }
-                      }
-                    }
-                  },
-                  {
-                    "type": "bind",
-                    "identifier": { "type": "literal", "value": "turn" },
-                    "value": {
-                      "type": "binary_op",
-                      "x": {
-                        "type": "var",
-                        "identifier": { "type": "literal", "value": "turn" }
-                      },
-                      "op": "+",
-                      "y": {
-                        "type": "literal",
-                        "value": { "type": "number", "value": 10 }
-                      }
-                    }
-                  },
-                  {
-                    "type": "print",
-                    "value": {
-                      "type": "binary_op",
                       "x": {
                         "type": "binary_op",
+                        "op": "+",
                         "x": {
                           "type": "literal",
-                          "value": { "type": "text", "value": "You chopped " }
+                          "value": {
+                            "type": "text",
+                            "value": "Turn: "
+                          }
                         },
-                        "op": "+",
                         "y": {
                           "type": "var",
-                          "identifier": { "type": "literal", "value": "r1" }
-                        }
-                      },
-                      "op": "+",
-                      "y": {
-                        "type": "literal",
-                        "value": { "type": "text", "value": " wood." }
-                      }
-                    }
-                  }
-                ]
-              },
-              "id": "2c7c0c49-9ca7-4652-a310-0b4d83e7e890"
-            }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Chop wood" }
-          },
-          "condition": {
-            "type": "binary_op",
-            "op": ">",
-            "x": {
-              "type": "var",
-              "identifier": { "type": "literal", "value": "stamina" }
-            },
-            "y": {
-              "type": "literal",
-              "value": { "type": "number", "value": 9 }
-            }
-          }
-        }
-      ]
-    },
-    "menu": {
-      "id": "menu",
-      "text": {
-        "type": "binary_op",
-        "x": {
-          "type": "binary_op",
-          "x": {
-            "type": "binary_op",
-            "x": {
-              "type": "literal",
-              "value": { "type": "text", "value": "You have " }
-            },
-            "op": "+",
-            "y": {
-              "type": "fun_call",
-              "identifier": { "type": "literal", "value": "displayInv" },
-              "args": [
-                {
-                  "type": "var",
-                  "identifier": { "type": "literal", "value": "inv_wood" }
-                },
-                {
-                  "type": "literal",
-                  "value": { "type": "text", "value": "wood" }
-                }
-              ]
-            }
-          },
-          "op": "+",
-          "y": { "type": "literal", "value": { "type": "text", "value": ", " } }
-        },
-        "op": "+",
-        "y": {
-          "type": "fun_call",
-          "identifier": { "type": "literal", "value": "displayInv" },
-          "args": [
-            {
-              "type": "var",
-              "identifier": { "type": "literal", "value": "inv_berries" }
-            },
-            {
-              "type": "literal",
-              "value": { "type": "text", "value": "berries" }
-            }
-          ]
-        }
-      },
-      "options": [
-        {
-          "id": "18277606-cbc3-4579-9241-ae389dcbe50e",
-          "actions": [
-            {
-              "type": "go_dialog",
-              "destination": "_specialConsume",
-              "id": "8b782875-b946-44ec-916a-9f3db5483cc7"
-            }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Consume" }
-          }
-        },
-        {
-          "id": "1f5c5219-16c6-4d28-acd9-0d90bd3ab102",
-          "actions": [
-            {
-              "type": "screept",
-              "value": {
-                "type": "bind",
-                "identifier": { "type": "literal", "value": "_specialOption" },
-                "value": {
-                  "type": "literal",
-                  "value": { "type": "text", "value": "menu" }
-                }
-              },
-              "id": "3c1069f1-31a5-47a3-98b4-81ec309f1416"
-            },
-            { "type": "go back", "id": "4b99cb22-fe2b-42c8-adba-a8d44ee698c4" }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Go Back" }
-          }
-        }
-      ]
-    },
-    "_specialConsume": {
-      "id": "_specialConsume",
-      "text": {
-        "type": "literal",
-        "value": { "type": "text", "value": "Use item" }
-      },
-      "options": [
-        {
-          "id": "5a7af0e7-12e9-41f3-9586-d8b7da90d184",
-          "actions": [
-            {
-              "type": "screept",
-              "value": {
-                "type": "block",
-                "statements": [
-                  {
-                    "type": "bind",
-                    "identifier": { "type": "literal", "value": "inv_berries" },
-                    "value": {
-                      "type": "binary_op",
-                      "x": {
-                        "type": "var",
-                        "identifier": {
-                          "type": "literal",
-                          "value": "inv_berries"
-                        }
-                      },
-                      "op": "-",
-                      "y": {
-                        "type": "literal",
-                        "value": { "type": "number", "value": 1 }
-                      }
-                    }
-                  },
-                  {
-                    "type": "bind",
-                    "identifier": { "type": "literal", "value": "stamina" },
-                    "value": {
-                      "type": "condition",
-                      "condition": {
-                        "type": "parens",
-                        "expression": {
-                          "type": "binary_op",
-                          "op": ">",
-                          "x": {
-                            "type": "binary_op",
-                            "x": {
-                              "type": "var",
-                              "identifier": {
-                                "type": "literal",
-                                "value": "stamina"
-                              }
-                            },
-                            "op": "+",
-                            "y": {
-                              "type": "literal",
-                              "value": { "type": "number", "value": 20 }
-                            }
-                          },
-                          "y": {
+                          "identifier": {
                             "type": "literal",
-                            "value": { "type": "number", "value": 100 }
+                            "value": "turn"
                           }
                         }
                       },
-                      "onTrue": {
+                      "y": {
                         "type": "literal",
-                        "value": { "type": "number", "value": 100 }
-                      },
-                      "onFalse": {
+                        "value": {
+                          "type": "text",
+                          "value": ". You have "
+                        }
+                      }
+                    },
+                    "y": {
+                      "type": "var",
+                      "identifier": {
+                        "type": "literal",
+                        "value": "money"
+                      }
+                    }
+                  },
+                  "y": {
+                    "type": "literal",
+                    "value": {
+                      "type": "text",
+                      "value": " coins. Stamina: "
+                    }
+                  }
+                },
+                "y": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "stamina"
+                  }
+                }
+              },
+              "y": {
+                "type": "literal",
+                "value": {
+                  "type": "text",
+                  "value": ". "
+                }
+              }
+            },
+            "y": {
+              "type": "fun_call",
+              "identifier": {
+                "type": "literal",
+                "value": "displayTime"
+              },
+              "args": []
+            }
+          }
+        },
+        "stamina": {
+          "type": "number",
+          "value": 70
+        },
+        "r1": {
+          "type": "number",
+          "value": 3
+        },
+        "inv_wood": {
+          "type": "number",
+          "value": 29
+        },
+        "mod": {
+          "type": "func",
+          "value": {
+            "type": "binary_op",
+            "op": "-",
+            "x": {
+              "type": "var",
+              "identifier": {
+                "type": "literal",
+                "value": "_0"
+              }
+            },
+            "y": {
+              "type": "binary_op",
+              "op": "*",
+              "x": {
+                "type": "parens",
+                "expression": {
+                  "type": "binary_op",
+                  "op": "//",
+                  "x": {
+                    "type": "var",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "_0"
+                    }
+                  },
+                  "y": {
+                    "type": "var",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "_1"
+                    }
+                  }
+                }
+              },
+              "y": {
+                "type": "var",
+                "identifier": {
+                  "type": "literal",
+                  "value": "_1"
+                }
+              }
+            }
+          }
+        },
+        "_minutes_by_turn": {
+          "type": "number",
+          "value": 15
+        },
+        "_turns_by_hour": {
+          "type": "number",
+          "value": 4
+        },
+        "_turns_by_day": {
+          "type": "number",
+          "value": 96
+        },
+        "day": {
+          "type": "number",
+          "value": 1
+        },
+        "hour": {
+          "type": "number",
+          "value": 23
+        },
+        "minutes": {
+          "type": "number",
+          "value": 30
+        },
+        "displayTime": {
+          "type": "func",
+          "value": {
+            "type": "binary_op",
+            "op": "+",
+            "x": {
+              "type": "binary_op",
+              "op": "+",
+              "x": {
+                "type": "binary_op",
+                "op": "+",
+                "x": {
+                  "type": "binary_op",
+                  "op": "+",
+                  "x": {
+                    "type": "binary_op",
+                    "op": "+",
+                    "x": {
+                      "type": "literal",
+                      "value": {
+                        "type": "text",
+                        "value": "Day "
+                      }
+                    },
+                    "y": {
+                      "type": "parens",
+                      "expression": {
                         "type": "binary_op",
+                        "op": "+",
                         "x": {
                           "type": "var",
                           "identifier": {
                             "type": "literal",
-                            "value": "stamina"
+                            "value": "day"
                           }
                         },
-                        "op": "+",
                         "y": {
                           "type": "literal",
-                          "value": { "type": "number", "value": 20 }
+                          "value": {
+                            "type": "number",
+                            "value": 1
+                          }
                         }
                       }
                     }
                   },
-                  {
-                    "type": "print",
+                  "y": {
+                    "type": "literal",
                     "value": {
-                      "type": "literal",
-                      "value": { "type": "text", "value": "You ate a berry." }
+                      "type": "text",
+                      "value": ", "
                     }
                   }
-                ]
+                },
+                "y": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "hour"
+                  }
+                }
               },
-              "id": "eb953f6d-3fb9-4912-8c4e-cd41a2f77d27"
-            }
-          ],
-          "text": {
-            "type": "binary_op",
-            "x": {
-              "type": "binary_op",
-              "x": {
-                "type": "literal",
-                "value": { "type": "text", "value": "Eat a berry (have " }
-              },
-              "op": "+",
               "y": {
-                "type": "var",
-                "identifier": { "type": "literal", "value": "inv_berries" }
+                "type": "literal",
+                "value": {
+                  "type": "text",
+                  "value": ":"
+                }
               }
             },
-            "op": "+",
             "y": {
-              "type": "literal",
-              "value": { "type": "text", "value": ")" }
-            }
-          },
-          "condition": {
-            "type": "binary_op",
-            "op": ">",
-            "x": {
-              "type": "var",
-              "identifier": { "type": "literal", "value": "inv_berries" }
-            },
-            "y": {
-              "type": "literal",
-              "value": { "type": "number", "value": 0 }
+              "type": "parens",
+              "expression": {
+                "type": "condition",
+                "condition": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "minutes"
+                  }
+                },
+                "onTrue": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "minutes"
+                  }
+                },
+                "onFalse": {
+                  "type": "literal",
+                  "value": {
+                    "type": "text",
+                    "value": "00"
+                  }
+                }
+              }
             }
           }
         },
-        {
-          "id": "091abb71-30cd-4651-8860-a3253b918674",
-          "actions": [
-            { "type": "go back", "id": "065a7d13-9f33-432f-bee8-deed1423a9a4" }
-          ],
-          "text": {
-            "type": "literal",
-            "value": { "type": "text", "value": "Go Back" }
+        "_0": {
+          "type": "number",
+          "value": 86
+        },
+        "_specialOption": {
+          "type": "text",
+          "value": "menu"
+        },
+        "displayInv": {
+          "type": "func",
+          "value": {
+            "type": "condition",
+            "condition": {
+              "type": "var",
+              "identifier": {
+                "type": "literal",
+                "value": "_0"
+              }
+            },
+            "onTrue": {
+              "type": "binary_op",
+              "op": "+",
+              "x": {
+                "type": "binary_op",
+                "op": "+",
+                "x": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "_1"
+                  }
+                },
+                "y": {
+                  "type": "literal",
+                  "value": {
+                    "type": "text",
+                    "value": ": "
+                  }
+                }
+              },
+              "y": {
+                "type": "var",
+                "identifier": {
+                  "type": "literal",
+                  "value": "_0"
+                }
+              }
+            },
+            "onFalse": {
+              "type": "literal",
+              "value": {
+                "type": "text",
+                "value": ""
+              }
+            }
           }
+        },
+        "inv_berries": {
+          "type": "number",
+          "value": 86
+        }
+      },
+      "procedures": {
+        "setTime": {
+          "type": "block",
+          "statements": [
+            {
+              "type": "bind",
+              "identifier": {
+                "type": "literal",
+                "value": "day"
+              },
+              "value": {
+                "type": "binary_op",
+                "op": "//",
+                "x": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "turn"
+                  }
+                },
+                "y": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "_turns_by_day"
+                  }
+                }
+              }
+            },
+            {
+              "type": "bind",
+              "identifier": {
+                "type": "literal",
+                "value": "hour"
+              },
+              "value": {
+                "type": "binary_op",
+                "op": "//",
+                "x": {
+                  "type": "fun_call",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "mod"
+                  },
+                  "args": [
+                    {
+                      "type": "var",
+                      "identifier": {
+                        "type": "literal",
+                        "value": "turn"
+                      }
+                    },
+                    {
+                      "type": "var",
+                      "identifier": {
+                        "type": "literal",
+                        "value": "_turns_by_day"
+                      }
+                    }
+                  ]
+                },
+                "y": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "_turns_by_hour"
+                  }
+                }
+              }
+            },
+            {
+              "type": "bind",
+              "identifier": {
+                "type": "literal",
+                "value": "minutes"
+              },
+              "value": {
+                "type": "binary_op",
+                "op": "*",
+                "x": {
+                  "type": "fun_call",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "mod"
+                  },
+                  "args": [
+                    {
+                      "type": "var",
+                      "identifier": {
+                        "type": "literal",
+                        "value": "turn"
+                      }
+                    },
+                    {
+                      "type": "var",
+                      "identifier": {
+                        "type": "literal",
+                        "value": "_turns_by_hour"
+                      }
+                    }
+                  ]
+                },
+                "y": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "_minutes_by_turn"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "passTurn": {
+          "type": "block",
+          "statements": [
+            {
+              "type": "bind",
+              "identifier": {
+                "type": "literal",
+                "value": "turn"
+              },
+              "value": {
+                "type": "binary_op",
+                "op": "+",
+                "x": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "turn"
+                  }
+                },
+                "y": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "_0"
+                  }
+                }
+              }
+            },
+            {
+              "type": "proc_run",
+              "identifier": {
+                "type": "literal",
+                "value": "setTime"
+              },
+              "args": []
+            }
+          ]
+        }
+      },
+      "output": [
+        {
+          "ts": 1699476966277,
+          "value": "You chopped 2 wood."
+        },
+        {
+          "ts": 1699476966903,
+          "value": "You chopped 1 wood."
+        },
+        {
+          "ts": 1699476967226,
+          "value": "You chopped 3 wood."
         }
       ]
     }

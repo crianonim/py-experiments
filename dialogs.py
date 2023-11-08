@@ -300,8 +300,8 @@ def loop(gd):
 
 
 if __name__ == "__main__":
-    game_definition = load_game("fable")
+    # game_definition = load_game("fable")
+    game_definition = load_game("customGame")
     loop(game_definition)
-    # game_definition = load_game("customGame")
     # show_dialog(game_definition.dialogs, game_definition.game_state.dialog_stack[0],
     #             game_definition.game_state.environment)
