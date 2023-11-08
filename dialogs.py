@@ -17,13 +17,17 @@ def parse_value(d) -> screept.Value:
         case {"type": "func", "value": x}:
             return screept.ValueFunction(parse_expression(x))
         case _:
-            raise Exception("Can't parse Value", d)
+            raise Exception("Parse Error Value: " + repr(d))
 
 
 def parse_identifier(d) -> screept.Identifier:
     match d:
         case {"type": 'literal', 'value': v}:
             return screept.IdentifierLiteral(v)
+        case {'type': 'computed', 'value': v}:
+            return screept.IdentifierComputed(parse_expression(v))
+        case _:
+            raise Exception("Parse Error Identifier: " + repr(d))
 
 
 def parse_expression(d):
@@ -53,8 +57,7 @@ def parse_expression(d):
             return screept.ExprUnaryOP(parse_expression(x), op)
         # case
         case _:
-            pprint(d)
-            raise Exception("EXPR", d)
+            raise Exception("Parse Error Expression: " + repr(d))
 
 
 def parse_statement(x):
@@ -77,18 +80,17 @@ def parse_statement(x):
             else:
                 return screept.StmtIf(parse_expression(condition), parse_statement(thenStatement))
         case _:
-            pprint(x)
-            raise Exception("CAN't" + x)
+            raise Exception("Parse Error Statement: " + repr(x))
 
 
 def process_var(v):
     name, value = v
-    return (name, parse_value(value))
+    return name, parse_value(value)
 
 
 def process_procedure(v):
     name, value = v
-    return (name, parse_statement(value))
+    return name, parse_statement(value)
 
 
 @dataclass
@@ -271,7 +273,7 @@ def execute_action(game: GameDefinition, action: DialogAction):
                     execute_action(game, a)
         case _:
             pprint(action)
-            raise Exception("NO handler for ACTION"+repr(action))
+            raise Exception("NO handler for ACTION" + repr(action))
 
 
 def loop(gd):
@@ -289,7 +291,11 @@ def loop(gd):
     else:
         pprint(option)
         for action in option.actions:
-            execute_action(gd, action)
+            try:
+                execute_action(gd, action)
+            except Exception as e:
+                print("Action Error: "+str(e))
+                pprint(gd.game_state.environment)
         loop(gd)
 
 
