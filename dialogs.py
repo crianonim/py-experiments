@@ -119,8 +119,8 @@ class DAScreept(DialogAction):
 @dataclass
 class DAConditional(DialogAction):
     condition: screept.Expression
-    then_action: Sequence[DialogAction]
-    else_action: Sequence[DialogAction]
+    then_actions: Sequence[DialogAction]
+    else_actions: Sequence[DialogAction]
 
 
 @dataclass
@@ -207,6 +207,10 @@ def load_game(title: str) -> GameDefinition:
         return GameDefinition(GameState(environment, dialog_stack), dict(dialogs))
 
 
+def get_split_string_on_nl(expr: screept.Expression, env: screept.Environment) -> list[str]:
+    return screept.evaluate_expression(expr, env).get_string().split('<nl>')
+
+
 def get_status_line(env: screept.Environment):
     if '__statusLine' in env.vars:
         parsed = screept.expr_parser.parse('__statusLine()')
@@ -234,11 +238,11 @@ def show_option(option: Option, env: screept.Environment):
 
 def show_dialog(dialogs: Mapping[str, Dialog], dialog_id: str, env: screept.Environment):
     dialog = dialogs[dialog_id]
-    pprint(dialog)
+    # pprint(dialog)
     status_line = get_status_line(env)
     if status_line:
         print(status_line)
-    print(screept.evaluate_expression(dialog.text, env).get_string())
+    print("\n".join(get_split_string_on_nl(dialog.text, env)))
     visible_options = get_visible_options(dialog.options, env)
     for i, opt in enumerate(visible_options):
         print(i + 1, show_option(opt, env))
@@ -247,19 +251,27 @@ def show_dialog(dialogs: Mapping[str, Dialog], dialog_id: str, env: screept.Envi
 
 
 def execute_action(game: GameDefinition, action: DialogAction):
+    env = game.game_state.environment
     match action:
         case DAGoDialog(dialog_id):
             game.game_state.dialog_stack.insert(0, dialog_id)
         case DAGoBack():
             game.game_state.dialog_stack.pop(0)
         case DAScreept(value):
-            screept.run_statement(value, game.game_state.environment)
+            screept.run_statement(value, env)
         case DAMessage(value):
             print("MESSAGE:")
-            print(screept.evaluate_expression(value, game.game_state.environment).get_string())
+            print(screept.evaluate_expression(value, env).get_string())
+        case DAConditional(condition, then_actions, else_actions):
+            if screept.evaluate_expression(condition, env).get_number():
+                for a in then_actions:
+                    execute_action(game, a)
+            else:
+                for a in else_actions:
+                    execute_action(game, a)
         case _:
             pprint(action)
-            raise Exception("NO handler for ACTION")
+            raise Exception("NO handler for ACTION"+repr(action))
 
 
 def loop(gd):
