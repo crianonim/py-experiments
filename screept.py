@@ -236,7 +236,7 @@ class StmtRnd(Statement):
 class StmtIf(Statement):
     condition: Identifier
     if_true: Statement
-    if_false: Optional[Statement]=None
+    if_false: Optional[Statement] = None
 
 
 @dataclass
@@ -364,13 +364,17 @@ def get_literal_value(v: Value) -> str | float:
         case _:
             raise Exception("wrong param")
 
+
 def get_identifier_value(i: Identifier, env: Environment) -> str:
     match i:
         case IdentifierLiteral(x):
             return x
         case IdentifierComputed(x):
-            return str(evaluate_expression(x, env))
-        case _: raise Exception("Wrong identifier")
+            print("ID "+repr(i),(evaluate_expression(x, env)).get_string())
+            return (evaluate_expression(x, env)).get_string()
+        case _:
+            raise Exception("Wrong identifier"+repr(i))
+
 
 def get_numerical_value(v: Value) -> float:
     match v:
@@ -390,8 +394,8 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
             return ValueFunction(v)
         case ExprBinaryOp(left, op, right):
             from operator import sub, mul, truediv, floordiv
-            ev_left=evaluate_expression(left, env)
-            ev_right=evaluate_expression(right, env)
+            ev_left = evaluate_expression(left, env)
+            ev_right = evaluate_expression(right, env)
             match op:
                 case "+":
 
@@ -410,7 +414,7 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
                 case "//":
                     binary = floordiv
                 case _:
-                    raise Exception("Unknown binary: "+op)
+                    raise Exception("Unknown binary: " + op)
 
             return ValueNumber(binary(ev_left.get_number(), ev_right.get_number()))
         case ExpressionVar(i):
@@ -418,13 +422,15 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
             return env.vars[get_identifier_value(i, env)]
         case ExprUnaryOP(left, op):
             match op:
-                case "-": return ValueNumber(-evaluate_expression(left, env).get_number())
+                case "-":
+                    return ValueNumber(-evaluate_expression(left, env).get_number())
                 case "!":
                     if evaluate_expression(left, env).get_number():
                         return ValueNumber(0)
                     else:
                         return ValueNumber(1)
-                case _: raise Exception("Unknown Unary"+op)
+                case _:
+                    raise Exception("Unknown Unary" + op)
         case ExprFuncCall(i, args):
             func = env.vars[get_identifier_value(i, env)]
             if isinstance(func, ValueFunction):
