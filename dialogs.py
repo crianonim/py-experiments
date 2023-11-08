@@ -38,7 +38,7 @@ def parse_expression(d):
                     return screept.ExprComparisonMore(parse_expression(left), parse_expression(right))
                 case _:
                     return screept.ExprBinaryOp(parse_expression(left), op, parse_expression(right))
-        case {'type': 'conditon', 'condition': expr, 'onFalse': on_false, 'onTrue': on_true}:
+        case {'type': 'condition', 'condition': expr, 'onFalse': on_false, 'onTrue': on_true}:
             return screept.ExprConditional(parse_expression(expr), parse_expression(on_true),
                                            parse_expression(on_false))
         case {'type': 'var', 'identifier': identifier}:

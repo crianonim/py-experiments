@@ -166,7 +166,7 @@
             "y": {
               "type": "parens",
               "expression": {
-                "type": "conditon",
+                "type": "condition",
                 "condition": {
                   "type": "var",
                   "identifier": { "type": "literal", "value": "minutes" }
@@ -188,7 +188,7 @@
         "displayInv": {
           "type": "func",
           "value": {
-            "type": "conditon",
+            "type": "condition",
             "condition": {
               "type": "var",
               "identifier": { "type": "literal", "value": "_0" }
@@ -739,7 +739,7 @@
                     "type": "bind",
                     "identifier": { "type": "literal", "value": "stamina" },
                     "value": {
-                      "type": "conditon",
+                      "type": "condition",
                       "condition": {
                         "type": "parens",
                         "expression": {
