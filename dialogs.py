@@ -187,7 +187,7 @@ def load_game(title: str) -> GameDefinition:
         game_state = data['gameState']
         # print(data.keys())
         env = game_state['screeptEnv']
-        dialog_stack: Sequence[str] = game_state['dialogStack']
+        dialog_stack: list[str] = game_state['dialogStack']
         # print(data['dialogs'])
         dialogs = [(x[0], parse_dialog(x[1])) for x in data['dialogs'].items()]
         # pprint(dialogs)
@@ -243,6 +243,8 @@ def execute_action(game: GameDefinition, action: DialogAction):
     match action:
         case DAGoDialog(dialog_id):
             game.game_state.dialog_stack.insert(0, dialog_id)
+        case DAGoBack():
+            game.game_state.dialog_stack.pop(0)
         case DAScreept(value):
             screept.run_statement(value, game.game_state.environment)
         case DAMessage(value):
@@ -253,23 +255,23 @@ def execute_action(game: GameDefinition, action: DialogAction):
             raise Exception("NO handler for ACTION")
 
 
-def loop(game_definition):
-    dialog = game_definition.dialogs[game_definition.game_state.dialog_stack[0]]
-    show_dialog(game_definition.dialogs, game_definition.game_state.dialog_stack[0],
-                game_definition.game_state.environment)
+def loop(gd):
+    dialog = gd.dialogs[gd.game_state.dialog_stack[0]]
+    show_dialog(gd.dialogs, gd.game_state.dialog_stack[0],
+                gd.game_state.environment)
     selected = input("Choose option")
     try:
         opt_no = int(selected)
-        option = get_visible_options(dialog.options, game_definition.game_state.environment)[opt_no - 1]
+        option = get_visible_options(dialog.options, gd.game_state.environment)[opt_no - 1]
 
 
     except:
-        loop(game_definition)
+        loop(gd)
     else:
         pprint(option)
         for action in option.actions:
-            execute_action(game_definition, action)
-        loop(game_definition)
+            execute_action(gd, action)
+        loop(gd)
 
 
 if __name__ == "__main__":
