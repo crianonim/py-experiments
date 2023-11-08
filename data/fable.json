@@ -1,0 +1,2335 @@
+{
+  "dialogs": {
+    "#1": {
+      "id": "#1",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "The approach of dawn has turned the sky a milky grey-green, like jade. The sea is a luminous pane of silver. Holding the tiller of your sailing boat, you keep your gaze fixed on the glittering constellation known as the Spider. It marks the north, and by keeping it to port you know you are still on course.<nl>    The sun appears in a trembling burst of red fire at the rim of the world. Slowly the chill of night gives way to brazen warmth. You lick your parched lips. There is a little water sloshing in the bottom of the barrel by your feet, but not enough to see you through another day.<nl>    Sealed in a scroll case tucked into your jerkin is the parchment map your grandfather gave to you on his death-bed. You remember his stirring tales of far sea voyages, of kingdoms beyond the western horizon, of sorcerous islands and ruined palaces filled with treasure. As a child you dreamed of nothing else but the magical quests that were in store if you too became an adventurer.<nl>    You never expected to die in an open boat before your adventures even began.<nl>    Securing the tiller, you unroll the map and study it again. You hardly need to. Every detail is etched into your memory by now. According to your reckoning, you should have reached the east coast of Harkuna, the great northern continent, days ago.<nl>    A pasty grey blob splatters on to the map. After a moment of stunned surprise, you look up and curse the seagull circling directly overhead. Then it strikes you – where there’s a seagull, there may be land.<nl>    You leap to your feet and scan the horizon. Sure enough, a line of white cliffs lie a league to the north. Have you been sailing along the coast all this time without realising the mainland was so close?<nl>    Steering towards the cliffs, you feel the boat judder against rough waves. A howling wind whips plumes of spindrift across the sea. Breakers pound the high cliffs. The tiller is yanked out of your hands. The little boat is spun around, out of control, and goes plunging in towards the coast.<nl>    You leap clear at the last second. There is the snap of timber, the roaring crescendo of the waves – and then silence as you go under. Striking out wildly, you try to swim clear of the razor- sharp rocks. For a while the undertow threatens to drag you down, then suddenly a wave catches you and flings you contemptuously up on to the beach.<nl>    Battered and bedraggled you lie gasping for breath until you hear someone walking along the shore towards you. Wary of danger, you lose no time in getting to your feet. Confronting you is an old man clad in a dirty loin-cloth. His eyes have a feverish bright look that is suggestive of either a mystic or a madman.<nl><nl>      "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#20",
+              "id": "2870a031-9b44-489e-b249-f63c8a20dd62"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "condition": {
+            "type": "literal",
+            "value": { "type": "number", "value": 1 }
+          },
+          "id": "3c4e83fc-0eb8-45d9-9a0f-567ed54f65bf"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#630",
+              "id": "8c7cf08a-ff28-4643-8517-a9fec9720adc"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "DEBUG: Go to tree" }
+          },
+          "id": "c6ff146e-b2c2-4d35-90ef-a8ef40212e39"
+        }
+      ]
+    },
+    "#128": {
+      "id": "#128",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>      You make your way around the coast. The interior of the island appears to be heavily forested. After a while, however, you come to a bay in which a couple of ships are anchored. A small settlement nestles on the beach, and you make your way towards it<nl>      "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#195",
+              "id": "bf855282-aa61-4492-af46-ce698e472def"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "id": "adb07ac2-9bec-4743-92d1-f1ce0a3a1cfb"
+        }
+      ]
+    },
+    "#148": {
+      "id": "#148",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>   ‘Stop, stop, I surrender!’ yells the tree. You cease your attack. ‘I guess you can pass, in view of recent events!’ it says grudgingly. Then it uproots itself with a great tearing sound, and shuffles out of the way. ‘There you go!’ mutters the tree, ‘You can blooming well pass.’<nl>   You walk through the thorn bush gate. Beyond, you find several huge oak trees whose branches are so big that they are able to support the homes of many people.<nl>   "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "bind",
+                "identifier": { "type": "literal", "value": "codeword_apple" },
+                "value": {
+                  "type": "literal",
+                  "value": { "type": "number", "value": 1 }
+                }
+              },
+              "id": "6234264e-dfdd-4aa9-8eb5-ea39ab68d755"
+            },
+            {
+              "type": "go_dialog",
+              "destination": "#358",
+              "id": "b0747c8e-8ebf-4c4c-8b4c-bde587597546"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "id": "2887473d-258e-41c5-b75a-604696f96769"
+        }
+      ]
+    },
+    "#192": {
+      "id": "#192",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>      During your short trip upward, the old man regales you with tales of your destiny and fate, continuously arguing with himself as he does so.<nl>      You reach a hill covered with a circle of large obsidian standing stones. Despite the bitter wind that blow across these hills the stones are unweathered and seem almost newly lain.<nl>      ‘Here are the Gates of the World.’ says the mad old man.<nl>      The stones are laid in such a way that they form three archways, each carven with mystic symbols and runes of power.<nl>      ‘Each gate will take you to a part of the world of Harkuna, though I know not where,’ explains the old man. Abruptly, he turns around and sets off down the hill, babbling to himself. His voice fades as he descends the hill, leaving you alone with the brooding stones and the howling wind<nl>      "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#65",
+              "id": "1841cabf-165c-4df6-97f0-ce8891ce29c1"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "id": "eee0e5bb-485b-40ac-80a3-26f9f89cac6a"
+        }
+      ]
+    },
+    "#195": {
+      "id": "#195",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>      The Trading Post is a small village, set up here by enterprising settlers from the mainland. Its main export appears to be furs from the forest.<nl>      The Mayor, a fat genial fellow, who greets you personally, insists that one day the Trading Post will be a thriving town. There is not a lot here yet, however: a small market, a quay, the settler’s houses, and a shrine to Lacuna the Huntress, goddess of nature.<nl>      "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "bind",
+                "identifier": { "type": "literal", "value": "codeword_aspen" },
+                "value": {
+                  "type": "literal",
+                  "value": { "type": "number", "value": 1 }
+                }
+              },
+              "id": "8b7defeb-82c1-47ba-83a1-6945ba80de84"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "condition": {
+            "type": "unary_op",
+            "op": "!",
+            "x": {
+              "type": "var",
+              "identifier": { "type": "literal", "value": "codeword_aspen" }
+            }
+          },
+          "id": "4db95489-1f48-4d9f-9a8e-29bf90bcc8bb"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#544",
+              "id": "31e9e058-44f1-41bc-97a9-60d8e182ec14"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Visit the shrine to Lacuna" }
+          },
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "codeword_aspen" }
+          },
+          "id": "751dd716-5d06-4ae0-9c30-6fe45f8a2ff5"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#452",
+              "id": "0037b4e5-2287-4581-8146-7757c3efac34"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Visit the market" }
+          },
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "codeword_aspen" }
+          },
+          "id": "7ff6333b-e19c-442d-8935-46d4a3c4151a"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#332",
+              "id": "a20fa963-9fec-4305-9b7a-28d8127c6abe"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Visit the quayside" }
+          },
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "codeword_aspen" }
+          },
+          "id": "3fcaaa2e-f7d4-4424-afc5-2ad0b851d877"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#181",
+              "id": "c3cf2884-5db7-4f03-b0f5-c24bfbcb8004"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Visit the Green Man Inn" }
+          },
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "codeword_aspen" }
+          },
+          "id": "b759ce89-1a86-44b1-af9b-f38cccdb4dc7"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#11",
+              "id": "08642d94-47fe-46bc-ac70-4a1eb70cf70b"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Climb the hill that overlooks the town"
+            }
+          },
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "codeword_aspen" }
+          },
+          "id": "f3b6c078-862f-4a41-b930-1af8811dfd89"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#257",
+              "id": "9d1a4bce-33f7-4046-9c92-935a9d0d8634"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Go inland, into the Old Forest"
+            }
+          },
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "codeword_aspen" }
+          },
+          "id": "2225295b-884d-48be-b645-a14b85a36d98"
+        }
+      ]
+    },
+    "#20": {
+      "id": "#20",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>      ‘Well, well, well, what have we here, friends?’ asks the old man. He seems to be talking to someone next to him, although you are certain he is alone. ‘Looks like a washed up adventurer to me!’ he says in answer to his own question, ‘all wet and out of luck.’<nl>      He carries on having a conversation – a conversation that quickly turns into a heated debate. He is clearly quite mad.<nl>      ‘Excuse me, umm, EXCUSE ME!,’ you shout above the hubbub in an attempt to grab the old man’s attention. He stops and stares at you.<nl>      ‘Is this the Isle of the Druids?’ you ask impatiently.<nl>      ‘Indeed it is,’ says the old man, ‘I see that you are from a far land so it is up to me to welcome you to Harkuna. But I think you may have much to do here as it is written in the stars that someone like you would come. Your destiny awaits you! Follow me, young adventurer.’<nl>      The old man turns smartly about and begins walking up a path towards some hills. You can just see some sort of monolithic stone structure atop one of them.<nl>      ‘Come on, come one, I’ll show you the Gates of the World,’ the old man babbles.<nl>      "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#192",
+              "id": "38e207c6-6ead-402d-b54b-fd3674c2ef96"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Follow him" }
+          },
+          "id": "2a07586f-c19f-46c2-9756-41c1fce985ad"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#128",
+              "id": "f9142288-ba34-47cb-89c4-82012bb2dd23"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Explore the coast" }
+          },
+          "id": "da3246f4-7456-4853-94b5-72a1164c4232"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#257",
+              "id": "87cb85a6-989a-406b-ae11-9381dc7d5d70"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Head into the nearby forest" }
+          },
+          "id": "69dbdb70-6388-4770-8d57-787c3d1908a2"
+        }
+      ]
+    },
+    "#257": {
+      "id": "#257",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>      The trees are closely packed, leaning together as if in conference, whispering quietly among themselves. Birds twitter in the distance, and slivers of sunlight lance down through the musty gloom.<nl>      As you proceed along a forest track, you think you hear a rustling in the bushes. Later, you spot a shadowy figure darting through the trees – or was it your imagination? An animal snuffling sound right behind you makes you spin round, but there is nothing there.<nl>      "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "bind",
+                    "identifier": { "type": "literal", "value": "test_score" },
+                    "value": {
+                      "type": "var",
+                      "identifier": {
+                        "type": "literal",
+                        "value": "player_scouting"
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "test_difficulty"
+                    },
+                    "value": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 10 }
+                    }
+                  },
+                  {
+                    "type": "proc_run",
+                    "identifier": { "type": "literal", "value": "test" },
+                    "args": []
+                  }
+                ]
+              },
+              "id": "e2bbb42f-e67f-4afb-9c78-a99190a94cab"
+            },
+            {
+              "type": "conditional",
+              "if": {
+                "type": "var",
+                "identifier": { "type": "literal", "value": "test_success" }
+              },
+              "then": [
+                {
+                  "type": "go_dialog",
+                  "destination": "#630",
+                  "id": "83aba733-03a4-4313-9913-6d369de12f31"
+                }
+              ],
+              "else": [
+                {
+                  "type": "go_dialog",
+                  "destination": "#36",
+                  "id": "1fcaeead-d013-4278-899a-c7e8a7874931"
+                }
+              ],
+              "id": "66623d0c-96fe-483f-9d84-43ebe5a6f80a"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "id": "467d6397-7a72-4093-ae48-45418c1fe075"
+        }
+      ]
+    },
+    "#358": {
+      "id": "#358",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>    ‘Welcome to the City of the Trees,’ says a passing woman, dressed in the garb of a druid.<nl>    The city has been built amid the branches of several mighty oaks. Ladders run up and down the trees to houses that perch like nests in the branches. You are not allowed into any houses, but the druids allow you to barter at the market.<nl>    "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "inv_armor_leather"
+                    },
+                    "value": {
+                      "type": "parens",
+                      "expression": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "inv_armor_leather"
+                          }
+                        },
+                        "op": "+",
+                        "y": {
+                          "type": "literal",
+                          "value": { "type": "number", "value": 1 }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": { "type": "literal", "value": "money" },
+                    "value": {
+                      "type": "parens",
+                      "expression": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "var",
+                          "identifier": { "type": "literal", "value": "money" }
+                        },
+                        "op": "-",
+                        "y": {
+                          "type": "literal",
+                          "value": { "type": "number", "value": 50 }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "id": "9cd4ae19-13b9-495f-99ab-ab2c8cc307ef"
+            }
+          ],
+          "text": {
+            "type": "parens",
+            "expression": {
+              "type": "binary_op",
+              "x": {
+                "type": "binary_op",
+                "x": {
+                  "type": "literal",
+                  "value": {
+                    "type": "text",
+                    "value": "Buy leather armour for 50 shards. Already have ("
+                  }
+                },
+                "op": "+",
+                "y": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "inv_armor_leather"
+                  }
+                }
+              },
+              "op": "+",
+              "y": {
+                "type": "literal",
+                "value": { "type": "text", "value": ")" }
+              }
+            }
+          },
+          "condition": {
+            "type": "parens",
+            "expression": {
+              "type": "binary_op",
+              "op": ">",
+              "x": {
+                "type": "var",
+                "identifier": { "type": "literal", "value": "money" }
+              },
+              "y": {
+                "type": "literal",
+                "value": { "type": "number", "value": 49 }
+              }
+            }
+          },
+          "id": "657f81b4-e349-406c-bd3b-2cf789dd8b0b"
+        },
+        {
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "inv_armor_leather"
+                    },
+                    "value": {
+                      "type": "parens",
+                      "expression": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "inv_armor_leather"
+                          }
+                        },
+                        "op": "-",
+                        "y": {
+                          "type": "literal",
+                          "value": { "type": "number", "value": 1 }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": { "type": "literal", "value": "money" },
+                    "value": {
+                      "type": "parens",
+                      "expression": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "var",
+                          "identifier": { "type": "literal", "value": "money" }
+                        },
+                        "op": "+",
+                        "y": {
+                          "type": "literal",
+                          "value": { "type": "number", "value": 45 }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "id": "908b1ad0-f310-46c4-8e72-e664e463780a"
+            }
+          ],
+          "text": {
+            "type": "parens",
+            "expression": {
+              "type": "binary_op",
+              "x": {
+                "type": "binary_op",
+                "x": {
+                  "type": "literal",
+                  "value": {
+                    "type": "text",
+                    "value": "Sell leather armour for 45 shards. Already have ("
+                  }
+                },
+                "op": "+",
+                "y": {
+                  "type": "var",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "inv_armor_leather"
+                  }
+                }
+              },
+              "op": "+",
+              "y": {
+                "type": "literal",
+                "value": { "type": "text", "value": ")" }
+              }
+            }
+          },
+          "condition": {
+            "type": "parens",
+            "expression": {
+              "type": "binary_op",
+              "op": ">",
+              "x": {
+                "type": "var",
+                "identifier": {
+                  "type": "literal",
+                  "value": "inv_armor_leather"
+                }
+              },
+              "y": {
+                "type": "literal",
+                "value": { "type": "number", "value": 0 }
+              }
+            }
+          },
+          "id": "a77e8d56-fc92-4209-9718-70b971141bc3"
+        },
+        {
+          "actions": [
+            {
+              "type": "conditional",
+              "if": {
+                "type": "parens",
+                "expression": {
+                  "type": "binary_op",
+                  "op": "==",
+                  "x": {
+                    "type": "var",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "player_profession"
+                    }
+                  },
+                  "y": {
+                    "type": "literal",
+                    "value": { "type": "number", "value": 1 }
+                  }
+                }
+              },
+              "then": [
+                {
+                  "type": "conditional",
+                  "if": {
+                    "type": "var",
+                    "identifier": { "type": "literal", "value": "box_645" }
+                  },
+                  "then": [
+                    {
+                      "type": "go_dialog",
+                      "destination": "#248",
+                      "id": "16c3af70-b5bf-493a-ba5b-86928f0b0b12"
+                    }
+                  ],
+                  "else": [
+                    {
+                      "type": "go_dialog",
+                      "destination": "#645",
+                      "id": "55009522-354a-4829-b8a9-e3bb340531ce"
+                    }
+                  ],
+                  "id": "26b53806-7419-4226-a5ad-0253b3b45f23"
+                }
+              ],
+              "else": [
+                {
+                  "type": "go_dialog",
+                  "destination": "#678",
+                  "id": "a957b89a-7401-48e1-8157-7287e0b7927b"
+                }
+              ],
+              "id": "8337405e-875b-4bae-bbac-1a0c1a7dd975"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Finished shopping" }
+          },
+          "id": "93c3492c-914c-4a88-a0fd-77c6a6588274"
+        }
+      ]
+    },
+    "#36": {
+      "id": "#36",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>    Soon you realize you are completely lost in this strange, magical forest. You wander around for days, barely able to find enough food and water. Lose 4 Stamina points.<nl>    "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "player_stamina"
+                    },
+                    "value": {
+                      "type": "parens",
+                      "expression": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "player_stamina"
+                          }
+                        },
+                        "op": "-",
+                        "y": {
+                          "type": "literal",
+                          "value": { "type": "number", "value": 4 }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "id": "b29a38ef-a9a5-4668-bb8b-4b78d9e8d144"
+            },
+            {
+              "type": "conditional",
+              "if": {
+                "type": "parens",
+                "expression": {
+                  "type": "binary_op",
+                  "op": "<",
+                  "x": {
+                    "type": "var",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "player_stamina"
+                    }
+                  },
+                  "y": {
+                    "type": "literal",
+                    "value": { "type": "number", "value": 1 }
+                  }
+                }
+              },
+              "then": [
+                {
+                  "type": "go_dialog",
+                  "destination": "game_over",
+                  "id": "6832ca75-eef6-4506-8f2b-528ca97698a6"
+                }
+              ],
+              "else": [
+                {
+                  "type": "go_dialog",
+                  "destination": "#36_",
+                  "id": "1223aaed-1942-43c6-b090-f3e9636fb8f8"
+                }
+              ],
+              "id": "cc63c250-0a03-49ce-9d22-780cfe2652ff"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "id": "2f83db88-8466-438a-8e8f-2cd2ec769073"
+        }
+      ]
+    },
+    "#36_": {
+      "id": "#36_",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>       ...you eventually stagger out of the forest to the coast.<nl>       "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#128",
+              "id": "ddb46928-c069-421b-b62c-ee850ce56dff"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "id": "dd372fda-50ce-4f70-859e-cebfa4cfa179"
+        }
+      ]
+    },
+    "#570": {
+      "id": "#570",
+      "text": {
+        "type": "parens",
+        "expression": {
+          "type": "condition",
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "fought_tree" }
+          },
+          "onTrue": {
+            "type": "parens",
+            "expression": {
+              "type": "condition",
+              "condition": {
+                "type": "var",
+                "identifier": { "type": "literal", "value": "fight_won" }
+              },
+              "onTrue": {
+                "type": "literal",
+                "value": {
+                  "type": "text",
+                  "value": "You managed to overcome the tree"
+                }
+              },
+              "onFalse": {
+                "type": "literal",
+                "value": {
+                  "type": "text",
+                  "value": "You wake up almost dead with no money..."
+                }
+              }
+            }
+          },
+          "onFalse": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "‘Aargh, you fiendish human!’ roars the tree, flailing its branches at you. You must fight.<nl>                 "
+            }
+          }
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "proc_run",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "combat_reset"
+                    },
+                    "args": []
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "_enemy_stamina"
+                    },
+                    "value": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 10 }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "_enemy_defence"
+                    },
+                    "value": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 7 }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "_enemy_combat"
+                    },
+                    "value": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 3 }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": { "type": "literal", "value": "_enemy_name" },
+                    "value": {
+                      "type": "literal",
+                      "value": { "type": "text", "value": "Tree" }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": { "type": "literal", "value": "fought_tree" },
+                    "value": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 1 }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "combat_player_failure"
+                    },
+                    "value": {
+                      "type": "literal",
+                      "value": {
+                        "type": "func",
+                        "value": {
+                          "type": "parens",
+                          "expression": {
+                            "type": "binary_op",
+                            "op": "<",
+                            "x": {
+                              "type": "var",
+                              "identifier": {
+                                "type": "literal",
+                                "value": "player_stamina"
+                              }
+                            },
+                            "y": {
+                              "type": "literal",
+                              "value": { "type": "number", "value": 1 }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "combat_player_success"
+                    },
+                    "value": {
+                      "type": "literal",
+                      "value": {
+                        "type": "func",
+                        "value": {
+                          "type": "parens",
+                          "expression": {
+                            "type": "binary_op",
+                            "op": "<",
+                            "x": {
+                              "type": "var",
+                              "identifier": {
+                                "type": "literal",
+                                "value": "_enemy_stamina"
+                              }
+                            },
+                            "y": {
+                              "type": "literal",
+                              "value": { "type": "number", "value": 5 }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "id": "f6d8ed5a-9a43-41ef-98ec-8d657a2ab81e"
+            },
+            {
+              "type": "go_dialog",
+              "destination": "combat",
+              "id": "e1035f9c-9bdc-4a2f-b66a-586debcc4cd4"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "condition": {
+            "type": "unary_op",
+            "op": "!",
+            "x": {
+              "type": "var",
+              "identifier": { "type": "literal", "value": "fought_tree" }
+            }
+          },
+          "id": "38da7fba-48de-4bf4-9139-e99d18647706"
+        },
+        {
+          "actions": [
+            {
+              "type": "conditional",
+              "if": {
+                "type": "var",
+                "identifier": { "type": "literal", "value": "fight_won" }
+              },
+              "then": [
+                {
+                  "type": "go_dialog",
+                  "destination": "#148",
+                  "id": "eea16999-c29f-4f10-98c9-c89004242c52"
+                }
+              ],
+              "else": [
+                {
+                  "type": "screept",
+                  "value": {
+                    "type": "block",
+                    "statements": [
+                      {
+                        "type": "bind",
+                        "identifier": { "type": "literal", "value": "money" },
+                        "value": {
+                          "type": "literal",
+                          "value": { "type": "number", "value": 0 }
+                        }
+                      },
+                      {
+                        "type": "bind",
+                        "identifier": {
+                          "type": "literal",
+                          "value": "player_stamina"
+                        },
+                        "value": {
+                          "type": "literal",
+                          "value": { "type": "number", "value": 1 }
+                        }
+                      }
+                    ]
+                  },
+                  "id": "cb952a29-88e8-4d27-b4f0-8c94b7592738"
+                },
+                {
+                  "type": "go_dialog",
+                  "destination": "#195",
+                  "id": "f28eebc7-0aaa-46da-aae5-ae7c0bc1a843"
+                }
+              ],
+              "id": "03761dfa-df83-4acb-9a0f-b34876f89517"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "fought_tree" }
+          },
+          "id": "9664afa0-d2fc-4a0d-9b96-042611336b40"
+        }
+      ]
+    },
+    "#630": {
+      "id": "#630",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>     You struggle deeper into the forest until you come to a thick wall of impenetrable thorn bushes. Circling it, you find there is a break in the hedge, but it is filled by a large tree.<nl>     To your surprise, a face forms in the trunk, and speaks in a woody voice, ‘None can pass – begone, human!’<nl>     "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#594",
+              "id": "2f2e025a-c2b3-4506-b7bf-43bdc722205f"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "codeword_apple" }
+          },
+          "id": "c42055e9-3427-4b25-9796-abcdf88c6b45"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#195",
+              "id": "681ff3ce-2a7f-4a83-8042-b74e4e8cdf2d"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Return to the Trading Post" }
+          },
+          "condition": {
+            "type": "unary_op",
+            "op": "!",
+            "x": {
+              "type": "var",
+              "identifier": { "type": "literal", "value": "codeword_apple" }
+            }
+          },
+          "id": "16ec8a81-2c10-4b5c-817f-75fabcdccb5f"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#570",
+              "id": "896df6ea-bab4-4e56-b25e-d1fb3a82b849"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Attack the tree" }
+          },
+          "condition": {
+            "type": "unary_op",
+            "op": "!",
+            "x": {
+              "type": "var",
+              "identifier": { "type": "literal", "value": "codeword_apple" }
+            }
+          },
+          "id": "dd80aa58-c96a-4afb-afc0-b48cd5dca63b"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#237",
+              "id": "19d4a140-e8a2-4b79-a78a-56b34c6e86eb"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Try to persuade it to let you pass"
+            }
+          },
+          "condition": {
+            "type": "unary_op",
+            "op": "!",
+            "x": {
+              "type": "var",
+              "identifier": { "type": "literal", "value": "codeword_apple" }
+            }
+          },
+          "id": "1a534c45-0449-4318-ac81-e458956e9859"
+        }
+      ]
+    },
+    "#645": {
+      "id": "#645",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>         You are brought before the druids’ leader, the Oak Druid, a bearded fellow with earth and leaves all tangled up in his hair. He asks you to perform a service for them.<nl>         ‘Take this oak staff to the Willow Druid in the forest of Larun. The sacred grove where he lives will be hard to find, but I’m sure you can do it. The Willow Druid will give you something to bring back to me. When you return with it, I will make you a better Wayfarer.’<nl>         "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "bind",
+                "identifier": { "type": "literal", "value": "inv_oak_staff" },
+                "value": {
+                  "type": "literal",
+                  "value": { "type": "number", "value": 1 }
+                }
+              },
+              "id": "8c1d8b87-a616-4024-b7fe-ff707cd08772"
+            },
+            {
+              "type": "conditional",
+              "if": {
+                "type": "literal",
+                "value": { "type": "number", "value": 0 }
+              },
+              "then": [
+                {
+                  "type": "go_dialog",
+                  "destination": "#195",
+                  "id": "947a2542-cf86-4d71-8b77-533cde829419"
+                }
+              ],
+              "else": [
+                {
+                  "type": "go_dialog",
+                  "destination": "#678",
+                  "id": "33ab6b78-0525-4d09-a6a5-596ee455dbb0"
+                }
+              ],
+              "id": "db44d06e-5093-46b1-9822-d2881fe4a967"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "id": "61af70d2-e330-41b6-a8ad-b3e9d67daad0"
+        }
+      ]
+    },
+    "#65": {
+      "id": "#65",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>    There are three stone gates engraved with ancient runes. Each gate is marked with a name – Yellowport, Marlock City, and Wishport. From here, you can see the coast and the whole island, which is heavily forested<nl>    "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#128",
+              "id": "d4ecf694-7fe0-4193-aa82-f146861eacbf"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Explore the coastline" }
+          },
+          "id": "70d8cd53-fddd-47c1-85e3-e8261103327d"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#257",
+              "id": "86a29585-45aa-4ddc-b9b5-c3c9148c441c"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Head into the forest" }
+          },
+          "id": "33b2ea64-a9fe-4caf-9b5f-528ca0abcb6e"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#8",
+              "id": "4d2920f4-20f1-497b-be37-2c6f484b9656"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Step through the Yellowport arch"
+            }
+          },
+          "id": "a16bd83d-56a4-456e-b1b9-239f5e3f3d6e"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#180",
+              "id": "a8fe33c1-da40-4cb7-b138-4cfeed665baf"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Step through the Marlock City arch"
+            }
+          },
+          "id": "bfb306df-ef81-4af8-8580-34e70d276a0c"
+        },
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#330",
+              "id": "664daa1e-66f1-4fb2-a7c3-0f44891bedb8"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": {
+              "type": "text",
+              "value": "Step through the Wishport arch"
+            }
+          },
+          "id": "10674383-9ef6-40b2-ab13-26de26ec0327"
+        }
+      ]
+    },
+    "#678": {
+      "id": "#678",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>             The journey through the trees proves as difficult as when you first ventured into the Old Forest.<nl>             (SCOUTING TEST)<nl>             "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "bind",
+                    "identifier": { "type": "literal", "value": "test_score" },
+                    "value": {
+                      "type": "var",
+                      "identifier": {
+                        "type": "literal",
+                        "value": "player_scouting"
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "test_difficulty"
+                    },
+                    "value": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 10 }
+                    }
+                  },
+                  {
+                    "type": "proc_run",
+                    "identifier": { "type": "literal", "value": "test" },
+                    "args": []
+                  }
+                ]
+              },
+              "id": "30691ccd-f354-4b71-b4c1-72c46032b43b"
+            },
+            {
+              "type": "conditional",
+              "if": {
+                "type": "var",
+                "identifier": {
+                  "type": "computed",
+                  "value": {
+                    "type": "var",
+                    "identifier": { "type": "literal", "value": "test_success" }
+                  }
+                }
+              },
+              "then": [
+                {
+                  "type": "go_dialog",
+                  "destination": "#679",
+                  "id": "aeef7d36-8e5a-4418-9624-492a6e0708f5"
+                }
+              ],
+              "else": [
+                {
+                  "type": "go_dialog",
+                  "destination": "#36",
+                  "id": "7f696887-cbf1-4e91-91c8-24f0a5fa83b1"
+                }
+              ],
+              "id": "d2565c1d-fd05-482c-a04a-31f242d8f81e"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "id": "1e4156a6-b014-42a8-a0a6-7906c99afb95"
+        }
+      ]
+    },
+    "#679": {
+      "id": "#679",
+      "text": {
+        "type": "literal",
+        "value": {
+          "type": "text",
+          "value": "<nl>                 The scent of the sea proves strongest in one direction. Following your nose, you eventually break free of the trees and find yourself on the coast.<nl>                 "
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "go_dialog",
+              "destination": "#128",
+              "id": "66331b3c-4991-4b0d-ac2d-5f67b17fd491"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "..." }
+          },
+          "id": "57624893-8629-41f4-9d00-9a96fd992e79"
+        }
+      ]
+    },
+    "combat": {
+      "id": "combat",
+      "text": {
+        "type": "parens",
+        "expression": {
+          "type": "binary_op",
+          "x": {
+            "type": "binary_op",
+            "x": {
+              "type": "binary_op",
+              "x": {
+                "type": "binary_op",
+                "x": {
+                  "type": "binary_op",
+                  "x": {
+                    "type": "binary_op",
+                    "x": {
+                      "type": "binary_op",
+                      "x": {
+                        "type": "literal",
+                        "value": { "type": "text", "value": "Combat. " }
+                      },
+                      "op": "+",
+                      "y": {
+                        "type": "literal",
+                        "value": {
+                          "type": "text",
+                          "value": "You are fighting "
+                        }
+                      }
+                    },
+                    "op": "+",
+                    "y": {
+                      "type": "var",
+                      "identifier": {
+                        "type": "literal",
+                        "value": "_enemy_name"
+                      }
+                    }
+                  },
+                  "op": "+",
+                  "y": {
+                    "type": "literal",
+                    "value": { "type": "text", "value": " .You have " }
+                  }
+                },
+                "op": "+",
+                "y": {
+                  "type": "var",
+                  "identifier": { "type": "literal", "value": "player_stamina" }
+                }
+              },
+              "op": "+",
+              "y": {
+                "type": "literal",
+                "value": { "type": "text", "value": " stamina. " }
+              }
+            },
+            "op": "+",
+            "y": {
+              "type": "literal",
+              "value": { "type": "text", "value": "Your enemy " }
+            }
+          },
+          "op": "+",
+          "y": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "_enemy_stamina" }
+          }
+        }
+      },
+      "options": [
+        {
+          "actions": [
+            {
+              "type": "screept",
+              "value": {
+                "type": "proc_run",
+                "identifier": { "type": "literal", "value": "combat" },
+                "args": []
+              },
+              "id": "69d0d10f-2ae0-47bd-a73b-4523e398dae7"
+            },
+            {
+              "type": "msg",
+              "value": {
+                "type": "parens",
+                "expression": {
+                  "type": "condition",
+                  "condition": {
+                    "type": "parens",
+                    "expression": {
+                      "type": "binary_op",
+                      "op": ">",
+                      "x": {
+                        "type": "var",
+                        "identifier": {
+                          "type": "literal",
+                          "value": "player_damage"
+                        }
+                      },
+                      "y": {
+                        "type": "literal",
+                        "value": { "type": "number", "value": 0 }
+                      }
+                    }
+                  },
+                  "onTrue": {
+                    "type": "parens",
+                    "expression": {
+                      "type": "binary_op",
+                      "x": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "literal",
+                          "value": { "type": "text", "value": "You dealt " }
+                        },
+                        "op": "+",
+                        "y": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "player_damage"
+                          }
+                        }
+                      },
+                      "op": "+",
+                      "y": {
+                        "type": "literal",
+                        "value": { "type": "text", "value": " damage" }
+                      }
+                    }
+                  },
+                  "onFalse": {
+                    "type": "literal",
+                    "value": { "type": "text", "value": "" }
+                  }
+                }
+              },
+              "id": "5caac1b2-6654-49b4-a531-8fed3c78ce11"
+            },
+            {
+              "type": "msg",
+              "value": {
+                "type": "parens",
+                "expression": {
+                  "type": "condition",
+                  "condition": {
+                    "type": "parens",
+                    "expression": {
+                      "type": "binary_op",
+                      "op": ">",
+                      "x": {
+                        "type": "var",
+                        "identifier": {
+                          "type": "literal",
+                          "value": "_enemy_damage"
+                        }
+                      },
+                      "y": {
+                        "type": "literal",
+                        "value": { "type": "number", "value": 0 }
+                      }
+                    }
+                  },
+                  "onTrue": {
+                    "type": "parens",
+                    "expression": {
+                      "type": "binary_op",
+                      "x": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "literal",
+                          "value": {
+                            "type": "text",
+                            "value": "You were dealt "
+                          }
+                        },
+                        "op": "+",
+                        "y": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "_enemy_damage"
+                          }
+                        }
+                      },
+                      "op": "+",
+                      "y": {
+                        "type": "literal",
+                        "value": { "type": "text", "value": " damage" }
+                      }
+                    }
+                  },
+                  "onFalse": {
+                    "type": "literal",
+                    "value": { "type": "text", "value": "" }
+                  }
+                }
+              },
+              "id": "f2431780-fc11-4e1b-b9a1-d116dd4de610"
+            }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "Hit enemy" }
+          },
+          "condition": {
+            "type": "fun_call",
+            "identifier": { "type": "literal", "value": "and" },
+            "args": [
+              {
+                "type": "unary_op",
+                "op": "!",
+                "x": {
+                  "type": "var",
+                  "identifier": { "type": "literal", "value": "fight_won" }
+                }
+              },
+              {
+                "type": "unary_op",
+                "op": "!",
+                "x": {
+                  "type": "var",
+                  "identifier": { "type": "literal", "value": "fight_lost" }
+                }
+              }
+            ]
+          },
+          "id": "ce9f77eb-969e-4d75-8bbf-be31a1c26b92"
+        },
+        {
+          "actions": [
+            {
+              "type": "msg",
+              "value": {
+                "type": "literal",
+                "value": { "type": "text", "value": "You won!" }
+              },
+              "id": "cf924209-ee3c-47ea-b86b-09f398acb404"
+            },
+            { "type": "go back", "id": "2c33c310-b74e-4ce9-9354-5654802ea86b" }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "You won!" }
+          },
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "fight_won" }
+          },
+          "id": "645f4184-dc75-4de9-b8cd-b37244c81efb"
+        },
+        {
+          "actions": [
+            {
+              "type": "msg",
+              "value": {
+                "type": "literal",
+                "value": { "type": "text", "value": "You lost!" }
+              },
+              "id": "92ab633a-1568-4d88-bf3f-fbaef387a85a"
+            },
+            { "type": "go back", "id": "5369681c-d20c-4771-9b13-0aa6cfff03be" }
+          ],
+          "text": {
+            "type": "literal",
+            "value": { "type": "text", "value": "You lost!" }
+          },
+          "condition": {
+            "type": "var",
+            "identifier": { "type": "literal", "value": "fight_lost" }
+          },
+          "id": "6bc6ae1f-deef-4837-9836-c6bff63f12e5"
+        }
+      ]
+    },
+    "game_over": {
+      "id": "game_over",
+      "text": {
+        "type": "literal",
+        "value": { "type": "text", "value": "You lost the game. Try again!" }
+      },
+      "options": []
+    }
+  },
+  "gameState": {
+    "screeptEnv": {
+      "output": [],
+      "vars": {
+        "__statusLine": {
+          "type": "func",
+          "value": {
+            "type": "literal",
+            "value": { "type": "text", "value": "" }
+          }
+        },
+        "and": {
+          "type": "func",
+          "value": {
+            "type": "binary_op",
+            "op": ">",
+            "x": {
+              "type": "binary_op",
+              "x": {
+                "type": "var",
+                "identifier": { "type": "literal", "value": "_0" }
+              },
+              "op": "*",
+              "y": {
+                "type": "var",
+                "identifier": { "type": "literal", "value": "_1" }
+              }
+            },
+            "y": {
+              "type": "literal",
+              "value": { "type": "number", "value": 0 }
+            }
+          }
+        },
+        "_enemy_name": { "type": "text", "value": "" },
+        "codeword_apple": { "type": "number", "value": 0 },
+        "codeword_aspen": { "type": "number", "value": 0 },
+        "fight_won": { "type": "number", "value": 0 },
+        "fought_tree": { "type": "number", "value": 0 },
+        "inv_armor_leather": { "type": "number", "value": 1 },
+        "inv_weapon": { "type": "number", "value": 1 },
+        "money": { "type": "number", "value": 126 },
+        "player_charisma": { "type": "number", "value": 5 },
+        "player_combat": { "type": "number", "value": 5 },
+        "player_defence": { "type": "number", "value": 7 },
+        "player_magic": { "type": "number", "value": 2 },
+        "player_name": { "type": "text", "value": "Liana" },
+        "player_profession": { "type": "text", "value": "wayfarer" },
+        "player_rank": { "type": "number", "value": 3 },
+        "player_sanctity": { "type": "number", "value": 3 },
+        "player_scouting": { "type": "number", "value": 1 },
+        "player_stamina": { "type": "number", "value": 9 },
+        "player_thievery": { "type": "number", "value": 4 },
+        "rnd": { "type": "number", "value": 0 },
+        "test_success": { "type": "number", "value": 0 }
+      },
+      "procedures": {
+        "combat": {
+          "type": "block",
+          "statements": [
+            {
+              "type": "random",
+              "identifier": { "type": "literal", "value": "rnd_d6_1" },
+              "from": {
+                "type": "literal",
+                "value": { "type": "number", "value": 1 }
+              },
+              "to": {
+                "type": "literal",
+                "value": { "type": "number", "value": 6 }
+              }
+            },
+            {
+              "type": "random",
+              "identifier": { "type": "literal", "value": "rnd_d6_2" },
+              "from": {
+                "type": "literal",
+                "value": { "type": "number", "value": 1 }
+              },
+              "to": {
+                "type": "literal",
+                "value": { "type": "number", "value": 6 }
+              }
+            },
+            {
+              "type": "bind",
+              "identifier": { "type": "literal", "value": "rnd_twod6" },
+              "value": {
+                "type": "parens",
+                "expression": {
+                  "type": "binary_op",
+                  "x": {
+                    "type": "var",
+                    "identifier": { "type": "literal", "value": "rnd_d6_1" }
+                  },
+                  "op": "+",
+                  "y": {
+                    "type": "var",
+                    "identifier": { "type": "literal", "value": "rnd_d6_2" }
+                  }
+                }
+              }
+            },
+            {
+              "type": "bind",
+              "identifier": { "type": "literal", "value": "player_attack" },
+              "value": {
+                "type": "parens",
+                "expression": {
+                  "type": "binary_op",
+                  "x": {
+                    "type": "var",
+                    "identifier": { "type": "literal", "value": "rnd_twod6" }
+                  },
+                  "op": "+",
+                  "y": {
+                    "type": "var",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "player_combat"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "bind",
+              "identifier": { "type": "literal", "value": "player_damage" },
+              "value": {
+                "type": "parens",
+                "expression": {
+                  "type": "binary_op",
+                  "x": {
+                    "type": "var",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "player_attack"
+                    }
+                  },
+                  "op": "-",
+                  "y": {
+                    "type": "var",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "_enemy_defence"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "if",
+              "condition": {
+                "type": "parens",
+                "expression": {
+                  "type": "binary_op",
+                  "op": ">",
+                  "x": {
+                    "type": "var",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "player_damage"
+                    }
+                  },
+                  "y": {
+                    "type": "literal",
+                    "value": { "type": "number", "value": 0 }
+                  }
+                }
+              },
+              "thenStatement": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "_enemy_stamina"
+                    },
+                    "value": {
+                      "type": "parens",
+                      "expression": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "_enemy_stamina"
+                          }
+                        },
+                        "op": "-",
+                        "y": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "player_damage"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "if",
+              "condition": {
+                "type": "unary_op",
+                "op": "!",
+                "x": {
+                  "type": "fun_call",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "combat_player_success"
+                  },
+                  "args": []
+                }
+              },
+              "thenStatement": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "random",
+                    "identifier": { "type": "literal", "value": "rnd_d6_1" },
+                    "from": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 1 }
+                    },
+                    "to": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 6 }
+                    }
+                  },
+                  {
+                    "type": "random",
+                    "identifier": { "type": "literal", "value": "rnd_d6_2" },
+                    "from": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 1 }
+                    },
+                    "to": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 6 }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": { "type": "literal", "value": "rnd_twod6" },
+                    "value": {
+                      "type": "parens",
+                      "expression": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "rnd_d6_1"
+                          }
+                        },
+                        "op": "+",
+                        "y": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "rnd_d6_2"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "_enemy_attack"
+                    },
+                    "value": {
+                      "type": "parens",
+                      "expression": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "rnd_twod6"
+                          }
+                        },
+                        "op": "+",
+                        "y": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "_enemy_combat"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "_enemy_damage"
+                    },
+                    "value": {
+                      "type": "parens",
+                      "expression": {
+                        "type": "binary_op",
+                        "x": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "_enemy_attack"
+                          }
+                        },
+                        "op": "-",
+                        "y": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "player_defence"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "if",
+                    "condition": {
+                      "type": "parens",
+                      "expression": {
+                        "type": "binary_op",
+                        "op": ">",
+                        "x": {
+                          "type": "var",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "_enemy_damage"
+                          }
+                        },
+                        "y": {
+                          "type": "literal",
+                          "value": { "type": "number", "value": 0 }
+                        }
+                      }
+                    },
+                    "thenStatement": {
+                      "type": "block",
+                      "statements": [
+                        {
+                          "type": "bind",
+                          "identifier": {
+                            "type": "literal",
+                            "value": "player_stamina"
+                          },
+                          "value": {
+                            "type": "parens",
+                            "expression": {
+                              "type": "binary_op",
+                              "x": {
+                                "type": "var",
+                                "identifier": {
+                                  "type": "literal",
+                                  "value": "player_stamina"
+                                }
+                              },
+                              "op": "-",
+                              "y": {
+                                "type": "var",
+                                "identifier": {
+                                  "type": "literal",
+                                  "value": "_enemy_damage"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "if",
+                          "condition": {
+                            "type": "parens",
+                            "expression": {
+                              "type": "binary_op",
+                              "op": "<",
+                              "x": {
+                                "type": "var",
+                                "identifier": {
+                                  "type": "literal",
+                                  "value": "player_stamina"
+                                }
+                              },
+                              "y": {
+                                "type": "literal",
+                                "value": { "type": "number", "value": 1 }
+                              }
+                            }
+                          },
+                          "thenStatement": {
+                            "type": "bind",
+                            "identifier": {
+                              "type": "literal",
+                              "value": "fight_lost"
+                            },
+                            "value": {
+                              "type": "literal",
+                              "value": { "type": "number", "value": 1 }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "if",
+              "condition": {
+                "type": "fun_call",
+                "identifier": {
+                  "type": "literal",
+                  "value": "combat_player_success"
+                },
+                "args": []
+              },
+              "thenStatement": {
+                "type": "block",
+                "statements": [
+                  {
+                    "type": "bind",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "_enemy_damage"
+                    },
+                    "value": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 0 }
+                    }
+                  },
+                  {
+                    "type": "bind",
+                    "identifier": { "type": "literal", "value": "fight_won" },
+                    "value": {
+                      "type": "literal",
+                      "value": { "type": "number", "value": 1 }
+                    }
+                  }
+                ]
+              },
+              "elseStatement": {
+                "type": "if",
+                "condition": {
+                  "type": "fun_call",
+                  "identifier": {
+                    "type": "literal",
+                    "value": "combat_player_failure"
+                  },
+                  "args": []
+                },
+                "thenStatement": {
+                  "type": "block",
+                  "statements": [
+                    {
+                      "type": "bind",
+                      "identifier": {
+                        "type": "literal",
+                        "value": "fight_lost"
+                      },
+                      "value": {
+                        "type": "literal",
+                        "value": { "type": "number", "value": 1 }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "combat_reset": {
+          "type": "block",
+          "statements": [
+            {
+              "type": "bind",
+              "identifier": { "type": "literal", "value": "fight_won" },
+              "value": {
+                "type": "literal",
+                "value": { "type": "number", "value": 0 }
+              }
+            },
+            {
+              "type": "bind",
+              "identifier": { "type": "literal", "value": "fight_lost" },
+              "value": {
+                "type": "literal",
+                "value": { "type": "number", "value": 0 }
+              }
+            },
+            {
+              "type": "bind",
+              "identifier": { "type": "literal", "value": "_enemy_name" },
+              "value": {
+                "type": "literal",
+                "value": { "type": "text", "value": "" }
+              }
+            }
+          ]
+        },
+        "test": {
+          "type": "block",
+          "statements": [
+            {
+              "type": "random",
+              "identifier": { "type": "literal", "value": "d6_1" },
+              "from": {
+                "type": "literal",
+                "value": { "type": "number", "value": 1 }
+              },
+              "to": {
+                "type": "literal",
+                "value": { "type": "number", "value": 6 }
+              }
+            },
+            {
+              "type": "random",
+              "identifier": { "type": "literal", "value": "d6_2" },
+              "from": {
+                "type": "literal",
+                "value": { "type": "number", "value": 1 }
+              },
+              "to": {
+                "type": "literal",
+                "value": { "type": "number", "value": 6 }
+              }
+            },
+            {
+              "type": "bind",
+              "identifier": { "type": "literal", "value": "twod6" },
+              "value": {
+                "type": "parens",
+                "expression": {
+                  "type": "binary_op",
+                  "x": {
+                    "type": "var",
+                    "identifier": { "type": "literal", "value": "d6_1" }
+                  },
+                  "op": "+",
+                  "y": {
+                    "type": "var",
+                    "identifier": { "type": "literal", "value": "d6_2" }
+                  }
+                }
+              }
+            },
+            {
+              "type": "if",
+              "condition": {
+                "type": "parens",
+                "expression": {
+                  "type": "binary_op",
+                  "op": ">",
+                  "x": {
+                    "type": "parens",
+                    "expression": {
+                      "type": "binary_op",
+                      "x": {
+                        "type": "var",
+                        "identifier": { "type": "literal", "value": "twod6" }
+                      },
+                      "op": "+",
+                      "y": {
+                        "type": "var",
+                        "identifier": {
+                          "type": "literal",
+                          "value": "test_score"
+                        }
+                      }
+                    }
+                  },
+                  "y": {
+                    "type": "var",
+                    "identifier": {
+                      "type": "literal",
+                      "value": "test_difficulty"
+                    }
+                  }
+                }
+              },
+              "thenStatement": {
+                "type": "bind",
+                "identifier": { "type": "literal", "value": "test_success" },
+                "value": {
+                  "type": "literal",
+                  "value": { "type": "number", "value": 1 }
+                }
+              },
+              "elseStatement": {
+                "type": "bind",
+                "identifier": { "type": "literal", "value": "test_success" },
+                "value": {
+                  "type": "literal",
+                  "value": { "type": "number", "value": 0 }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "dialogStack": ["#1"]
+  }
+}

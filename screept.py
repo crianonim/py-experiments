@@ -9,7 +9,7 @@ from collections.abc import MutableMapping, Callable
 from copy import deepcopy
 from math import floor
 from pprint import pprint
-from typing import Sequence, override
+from typing import Sequence, override, Optional
 from abc import ABC, abstractmethod
 from lark import Lark, Transformer, v_args, Token, tree
 from dataclasses import dataclass
@@ -93,7 +93,7 @@ class ValueFunction(Value):
 
 @dataclass
 class ExprFuncCall(Expression):
-    identifier: str
+    identifier: Identifier
     args: Sequence[ExprLiteralValue]
 
 
@@ -123,6 +123,18 @@ class ExprComparisonEqual(Expression):
     right: Expression
 
 
+@dataclass
+class ExprComparisonLess(Expression):
+    left: Expression
+    right: Expression
+
+
+@dataclass
+class ExprComparisonMore(Expression):
+    left: Expression
+    right: Expression
+
+
 grammar = """
     ?statement: "PRINT" expression                      -> stmt_print
         | "{" [statement (";" statement)*] ";"? "}"     -> stmt_block
@@ -143,6 +155,8 @@ grammar = """
     
     ?comparison : sum
         | sum "==" sum      -> comp_equal
+        | sum "<" sum       -> comp_less
+        | sum ">" sum       -> comp_more
     
     ?sum: product
         | sum "+" product   -> add
@@ -151,12 +165,12 @@ grammar = """
     ?product: atom
         | product "*" atom  -> mul
         | product "/" atom  -> div
-        |
+        | product "//" atom  -> floordiv
 
     ?atom: NUMBER           -> number
          | "-" atom         -> neg
          | "FUNC" conditional -> func
-         | identifier "(" [conditional ("," conditional)*] ")" -> func_call
+         | identifier "(" (conditional ("," conditional)*)* ")" -> func_call
          | identifier             -> var
          | "(" conditional ")"
          | STRING           -> string
@@ -222,7 +236,7 @@ class StmtRnd(Statement):
 class StmtIf(Statement):
     condition: Identifier
     if_true: Statement
-    if_false: Statement
+    if_false: Optional[Statement]=None
 
 
 @dataclass
@@ -290,6 +304,14 @@ class Ast(Transformer):
         return ExprComparisonEqual(left, right)
 
     @staticmethod
+    def comp_less(left, right):
+        return ExprComparisonLess(left, right)
+
+    @staticmethod
+    def comp_more(left, right):
+        return ExprComparisonMore(left, right)
+
+    @staticmethod
     def stmt_print(e):
         return StmtPrint(e)
 
@@ -339,7 +361,8 @@ def get_literal_value(v: Value) -> str | float:
             return x
         case ValueString(x):
             return x
-
+        case _:
+            raise Exception("wrong param")
 
 def get_identifier_value(i: Identifier, env: Environment) -> str:
     match i:
@@ -347,7 +370,7 @@ def get_identifier_value(i: Identifier, env: Environment) -> str:
             return x
         case IdentifierComputed(x):
             return str(evaluate_expression(x, env))
-
+        case _: raise Exception("Wrong identifier")
 
 def get_numerical_value(v: Value) -> float:
     match v:
@@ -366,16 +389,17 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
         case ValueFunction(v):
             return ValueFunction(v)
         case ExprBinaryOp(left, op, right):
-            from operator import sub, mul, truediv
+            from operator import sub, mul, truediv, floordiv
+            ev_left=evaluate_expression(left, env)
+            ev_right=evaluate_expression(right, env)
             match op:
                 case "+":
-                    l = evaluate_expression(left, env)
-                    r = evaluate_expression(right, env)
-                    match (l, r):
+
+                    match (ev_left, ev_right):
                         case (ValueNumber(ll), ValueNumber(rr)):
                             return ValueNumber(ll + rr)
                         case _:
-                            return ValueString(l.get_string() + r.get_string())
+                            return ValueString(ev_left.get_string() + ev_right.get_string())
 
                 case "-":
                     binary = sub
@@ -383,16 +407,24 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
                     binary = mul
                 case "/":
                     binary = truediv
+                case "//":
+                    binary = floordiv
                 case _:
-                    raise Exception
+                    raise Exception("Unknown binary: "+op)
 
-            return ValueNumber(binary(evaluate_expression(left, env), evaluate_expression(right, env)))
+            return ValueNumber(binary(ev_left.get_number(), ev_right.get_number()))
         case ExpressionVar(i):
 
             return env.vars[get_identifier_value(i, env)]
         case ExprUnaryOP(left, op):
             match op:
                 case "-": return ValueNumber(-evaluate_expression(left, env).get_number())
+                case "!":
+                    if evaluate_expression(left, env).get_number():
+                        return ValueNumber(0)
+                    else:
+                        return ValueNumber(1)
+                case _: raise Exception("Unknown Unary"+op)
         case ExprFuncCall(i, args):
             func = env.vars[get_identifier_value(i, env)]
             if isinstance(func, ValueFunction):
@@ -406,6 +438,17 @@ def evaluate_expression(e: Expression, env: Environment) -> Value:
                 return ValueNumber(1)
             else:
                 return ValueNumber(0)
+        case ExprComparisonLess(left, right):
+            if evaluate_expression(left, env).get_number() < evaluate_expression(right, env).get_number():
+                return ValueNumber(1)
+            else:
+                return ValueNumber(0)
+        case ExprComparisonMore(left, right):
+            if evaluate_expression(left, env).get_number() > evaluate_expression(right, env).get_number():
+                return ValueNumber(1)
+            else:
+                return ValueNumber(0)
+
         case ExprConditional(cond, if_true, if_false):
             ec = evaluate_expression(cond, env)
             if ec == ValueNumber(0):
@@ -452,7 +495,10 @@ def run_statement(s: Statement, env: Environment, emit_handler: Callable[[str], 
             if evaluate_expression(cond, env).get_number():
                 run_statement(if_true, env, emit_handler)
             else:
-                run_statement(if_false, env, emit_handler)
+                if if_false is None:
+                    pass
+                else:
+                    run_statement(if_false, env, emit_handler)
         case StmtEmit(expression):
             emit_handler(evaluate_expression(expression, env).get_string())
         case _:
@@ -494,7 +540,7 @@ def test():
      RND xx 2 10;
      PRINT xx;
      PRINT g;
-     IF xx==5 THEN PRINT "XX"+xx ELSE PRINT "YYY"+xx;
+     IF xx<8 THEN PRINT "XX"+xx ELSE PRINT "YYY"+xx;
      EMIT xx
      }"""
     sp1 = stmt_parser.parse(s1)
