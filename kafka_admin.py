@@ -2,15 +2,22 @@ from collections.abc import Mapping
 from concurrent.futures import Future
 from pprint import pprint
 
-from confluent_kafka import admin, TopicCollection, Uuid, TopicPartitionInfo, ConsumerGroupState
+from confluent_kafka import admin, TopicCollection, Uuid, TopicPartitionInfo, ConsumerGroupState, \
+    ConsumerGroupTopicPartitions, TopicPartition
 from confluent_kafka.admin import BrokerMetadata, TopicMetadata, ClusterMetadata, AdminClient, PartitionMetadata, \
     TopicDescription, ListConsumerGroupsResult, ConsumerGroupListing
 
 a: AdminClient = admin.AdminClient({'bootstrap.servers': 'localhost:29092'})
-
-
-
-
+tp0: TopicPartition=TopicPartition("trzeci",0,offset=0)
+tp1: TopicPartition=TopicPartition("trzeci",1,offset=0)
+lista:ConsumerGroupTopicPartitions = ConsumerGroupTopicPartitions("mygroup9",[tp0,tp1])
+x=a.alter_consumer_group_offsets([lista])
+# x=a.delete_consumer_groups(["mygroup9"])
+while x["mygroup9"].running():
+    pass
+print("RESULT")
+res:ConsumerGroupTopicPartitions=x["mygroup9"].result()
+pprint(res.topic_partitions)
 list_topics: ClusterMetadata = a.list_topics()
 topics: Mapping[str, TopicMetadata] = list_topics.topics
 mytopic: TopicMetadata = topics['mytopic']
