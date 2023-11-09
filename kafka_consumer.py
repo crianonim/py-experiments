@@ -21,16 +21,17 @@ while True:
         continue
 
     print('Received message: {}'.format(msg.value().decode('utf-8')))
-    pprint(msg)
-    print("TYPE :",type(msg))
-    pprint(dir(msg))
-    print("headers")
-    pprint(msg.headers())
-    print("value")
-    value = msg.value()
-    pprint(value)
-    print("TYPE :", type(value))
-    pprint(dir(value))
-    print(value.decode('utf-8'))
+    # pprint(msg)
+    # print("TYPE :",type(msg))
+    # pprint(dir(msg))
+    # print("headers")
+    # pprint(msg.headers())
+    # print("value")
+    # value = msg.value()
+    # pprint(value)
+    # print("TYPE :", type(value))
+    # pprint(dir(value))
+    # print(value.decode('utf-8'))
+
 
 c.close()
