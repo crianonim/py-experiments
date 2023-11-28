@@ -8,3 +8,4 @@ pydot
 ttkbootstrap~=1.10.1
 confluent-kafka
 pydantic
+tk
